@@ -11,6 +11,16 @@ System.Console.WriteLine(cpr.DoB);
 System.Console.WriteLine(Address.Street(7));
 System.Console.WriteLine(Address.Number());
 
+NameGenderGenerator nameGender = new NameGenderGenerator();
+if (nameGender.GetRandomPerson(out string firstName, out string lastName, out string gender))
+{
+    Console.WriteLine(firstName + ", " + lastName + ", " + gender);
+}
+else
+{
+    Console.WriteLine("File with person data not found.");
+}
+
 
 
 
