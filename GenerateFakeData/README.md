@@ -7,6 +7,6 @@ TODO:
 - [ ] extract random names from person-names.json
 - [ ] generate CPRs
     - [ ] match DOB with CPR
-- [ ] generate phone number - Marek
+- [ ] generate phone number - Marek DONE
   
  
