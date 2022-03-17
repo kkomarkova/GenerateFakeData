@@ -8,6 +8,9 @@ GenerateFakeData.data.Cpr cpr = new Cpr();
 System.Console.WriteLine(haha.generateRandomPhoneNumber());
 System.Console.WriteLine(cpr.generateCprNumber(cpr.DoB,true));
 System.Console.WriteLine(cpr.DoB);
+System.Console.WriteLine(Address.Street(7));
+System.Console.WriteLine(Address.Number());
+
 
 
 
