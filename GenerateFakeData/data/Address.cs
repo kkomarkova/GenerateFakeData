@@ -33,6 +33,7 @@ namespace GenerateFakeData.data
             }
             return Number;
         }
+        
 
     }
 }
