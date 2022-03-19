@@ -4,8 +4,6 @@ namespace GenerateFakeData.data
 {
     public class NameGenerator
     {
-        private int phoneNumber;
-        
         public static int[] starters = new int[] {2, 30, 31, 40, 41, 42, 50, 51, 52, 53, 60, 61, 71, 81, 91, 92, 93,
  342, 344, 345, 346, 347, 348, 349, 356, 357, 359, 362, 365, 366, 389, 398, 431, 441, 462, 466,  468,  472,  474,  476,  478,  485,
  486,  488, 489,  493, 494, 495, 496,  498, 499,  542, 543,  545,  551, 552, 556, 571, 572, 573, 574, 577, 579, 584, 586, 587, 589,
@@ -24,7 +22,7 @@ namespace GenerateFakeData.data
             //Generate random of the digit missing from number length - length of starting sequence (1,2,3)
             for (int i = 0; i < numberLength - lengthOfStartingSequence; i++)
             {
-                phoneNumberToReturn += rnd.Next(0, 9);
+                phoneNumberToReturn += rnd.Next(0, 10);
             }
             return phoneNumberToReturn;
         }

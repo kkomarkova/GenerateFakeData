@@ -27,7 +27,7 @@ namespace GenerateFakeData.data
             Random rnd = new Random();
             cpr += DoB;
 
-            cpr += rnd.Next(001, 999);
+            cpr += rnd.Next(001, 1000);
 
             if (isMale)
             {
