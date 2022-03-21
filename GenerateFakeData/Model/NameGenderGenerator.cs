@@ -32,9 +32,9 @@ namespace GenerateFakeData.data
             Random random = new Random();
             int member = random.Next(0, persons.Count);
             firstName = persons[member].name;
+            gender = persons[member].gender;
             member = random.Next(0, persons.Count);
             lastName = persons[member].surname;
-            gender = persons[member].gender;
 
             return true;
         }

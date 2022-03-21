@@ -9,13 +9,7 @@ using System.Threading.Tasks;
 namespace GenerateFakeData.Model
 {
     public class Person
-    {
-        
-
-        public static int[] starters = new int[] {2, 30, 31, 40, 41, 42, 50, 51, 52, 53, 60, 61, 71, 81, 91, 92, 93,
-            342, 344, 345, 346, 347, 348, 349, 356, 357, 359, 362, 365, 366, 389, 398, 431, 441, 462, 466,  468,  472,  474,  476,  478,  485,
-            486,  488, 489,  493, 494, 495, 496,  498, 499,  542, 543,  545,  551, 552, 556, 571, 572, 573, 574, 577, 579, 584, 586, 587, 589,
-            597, 598, 627, 629, 641, 649, 658, 662, 663, 664, 665, 667, 692, 693, 694, 697, 771, 772, 782, 783, 785, 786, 788, 789, 826, 827,829};
+    {        
         public string FullName { get; set; }
         public string Gender { get; set; }
         public string CprNumber { get; set; }
@@ -26,22 +20,31 @@ namespace GenerateFakeData.Model
         public string StreetNumber { get; set; }
         public string CityName { get; set; }
         public int PostalCode { get; set; }
-
-
-        public string DoB = DateofBirth();
+        public string DateOfBirth { get; set; }
 
         private static Random random = new Random();
 
-        private int myVar;
-
-        public int MyProperty
+        public async Task<bool> GenerateAllInfo()
         {
-            get { return myVar; }
-            set { myVar = value; }
+            try
+            {
+                SetNameAndGender();
+                DateOfBirth = GenerateDateofBirth();
+                GenerateCprNumber(DateOfBirth, Gender == "male");
+                SetRandomPhoneNumber();
+                await SetCity();
+                SetFloor();
+                SetDoor();
+                SetStreet();
+                SetStreetNumber();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }            
         }
-
-
-        public static string DateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
+        private string GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
             DateTime start = new DateTime(startYear, 1, 1);
             //GUID - broader version of numbers, guaranteed to be unique across tables
@@ -51,7 +54,7 @@ namespace GenerateFakeData.Model
             return start.AddDays(gen.Next(range)).ToString(outputDateFormat);
         }
 
-        public void GenerateCprNumber(string DoB, bool isMale)
+        private void GenerateCprNumber(string DoB, bool isMale)
         {
             Random rnd = new Random();
             CprNumber += DoB;
@@ -70,8 +73,13 @@ namespace GenerateFakeData.Model
             }
         }
 
-        public void SetRandomPhoneNumber()
+        private void SetRandomPhoneNumber()
         {
+            int[] starters = new int[] {2, 30, 31, 40, 41, 42, 50, 51, 52, 53, 60, 61, 71, 81, 91, 92, 93,
+            342, 344, 345, 346, 347, 348, 349, 356, 357, 359, 362, 365, 366, 389, 398, 431, 441, 462, 466,  468,  472,  474,  476,  478,  485,
+            486,  488, 489,  493, 494, 495, 496,  498, 499,  542, 543,  545,  551, 552, 556, 571, 572, 573, 574, 577, 579, 584, 586, 587, 589,
+            597, 598, 627, 629, 641, 649, 658, 662, 663, 664, 665, 667, 692, 693, 694, 697, 771, 772, 782, 783, 785, 786, 788, 789, 826, 827,829};
+
             string Generated = "";
             Random Rnd = new Random();
             int NumberLength = 8;
@@ -87,8 +95,7 @@ namespace GenerateFakeData.Model
             }
             PhoneNumber = Generated;
         }
-
-        public string SetStreet()
+        private string SetStreet()
         {
             // lets say we want our street names to be at least 6 and at most 16 characters long, so that it makes *some* sense
             int Length = random.Next(6, 17);
@@ -100,7 +107,7 @@ namespace GenerateFakeData.Model
             return char.ToUpper(StreetName[0]) + StreetName.Substring(1);
         }
 
-        public void SetStreetNumber()
+        private void SetStreetNumber()
         {
             const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string StreetNumber = random.Next(1, 1000).ToString();
@@ -119,8 +126,7 @@ namespace GenerateFakeData.Model
             this.StreetNumber = StreetNumber;
         }
 
-
-        public void setFloor()
+        private void SetFloor()
         {
             // floor number is either "st" or a number 1-99, so we take random number, if we get 0, we turn that into "st", otherwise just return
             string FloorToReturn;
@@ -134,7 +140,7 @@ namespace GenerateFakeData.Model
             this.Floor = FloorToReturn;
         }
 
-        public void setDoor()
+        private void SetDoor()
         {
             // final string that will be returned
             string DoorToReturn = "";
@@ -184,7 +190,7 @@ namespace GenerateFakeData.Model
             Door = DoorToReturn;
         }
         //Reading city and postalcode from Address.sql
-        public async Task<bool> SetCity()
+        private async Task<bool> SetCity()
         {
             MySqlConnection conn = DBUtils.GetDBConnection();
             List<city> citylist = new List<city>();
@@ -221,25 +227,12 @@ namespace GenerateFakeData.Model
             }
         }
 
-        public void SetNameAndGender()
+        private void SetNameAndGender()
         {
             data.NameGenderGenerator nameGenderGenerator = new data.NameGenderGenerator();
             nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
             FullName = firstName + " " + lastName;
             Gender = gender;
-        }
-
-        public void GetData(out string fullName, out string gender, out string cprNumber, out string phoneNumber, out string door, out string street, out string streetNr, out string cityName, out int postalCode)
-        {
-            fullName = FullName;
-            gender = Gender;
-            cprNumber = CprNumber;
-            phoneNumber = PhoneNumber;
-            door = Door;
-            street = Street;
-            streetNr = StreetNumber;
-            cityName = CityName;
-            postalCode = PostalCode;
         }
     }
 }

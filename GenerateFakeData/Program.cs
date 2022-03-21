@@ -35,19 +35,17 @@ public class Program
     {
         Person person = new Person();
 
-        bool result = await person.SetCity();
-        person.SetNameAndGender();
-
-        //Only get name and city and postal code
-        person.GetData(out string name, out _, out _, out _, out _, out _, out _, out string cityName, out int postalCode);
-
+        bool result = await person.GenerateAllInfo();
         if (result)
         {
-            //One way of getting data
-            Console.WriteLine(person.CityName + " " + person.PostalCode);
-            Console.WriteLine(person.FullName);
-            //Second way of getting data
-            Console.WriteLine(name);
+            Console.WriteLine($"Randomly generated person data:\nFull name: {person.FullName}\nGender: {person.Gender}" +
+                $"\nDate of birth: {person.DateOfBirth}\nCPR number: {person.CprNumber}\n" +
+                $"Address: {person.Street} {person.StreetNumber}, fl. {person.Floor}, {person.Door}\n{person.PostalCode} {person.CityName}" +
+                $"\nPhone number: {person.PhoneNumber}");
+        }
+        else
+        {
+            Console.WriteLine("Generation unsucessful");
         }
     }
 }
