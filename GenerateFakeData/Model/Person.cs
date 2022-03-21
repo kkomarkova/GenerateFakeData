@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GenerateFakeData.Database;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,9 @@ namespace GenerateFakeData.Model
         public string Floor { get; set; }
         public string Street { get; set; }
         public string StreetNumber { get; set; }
+        public string CityName { get; set; }
+        public int PostalCode { get; set; }
+
 
         public string DoB = DateofBirth();
 
@@ -179,9 +184,62 @@ namespace GenerateFakeData.Model
             Door = DoorToReturn;
         }
         //Reading city and postalcode from Address.sql
-        public async Task SetCity()
+        public async Task<bool> SetCity()
         {
+            MySqlConnection conn = DBUtils.GetDBConnection();
+            List<city> citylist = new List<city>();
 
+            try
+            {
+                conn.Open();
+
+                //SQL Query to execute
+                //selecting from postal code
+                string sql = "select * from postal_code";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                //read the data + create a list of the cities read from the database
+                while (rdr.Read())
+                {
+                    citylist.Add(new city(Convert.ToInt32(rdr[0]), rdr[1].ToString()));
+                }
+                rdr.Close();
+
+                //Random city number from the list
+                int index = random.Next(0, citylist.Count);
+
+                //Updating object's variables with the random city's information
+                CityName = citylist[index].CityName;
+                PostalCode = citylist[index].PostalCode;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public void SetNameAndGender()
+        {
+            data.NameGenderGenerator nameGenderGenerator = new data.NameGenderGenerator();
+            nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
+            FullName = firstName + " " + lastName;
+            Gender = gender;
+        }
+
+        public void GetData(out string fullName, out string gender, out string cprNumber, out string phoneNumber, out string door, out string street, out string streetNr, out string cityName, out int postalCode)
+        {
+            fullName = FullName;
+            gender = Gender;
+            cprNumber = CprNumber;
+            phoneNumber = PhoneNumber;
+            door = Door;
+            street = Street;
+            streetNr = StreetNumber;
+            cityName = CityName;
+            postalCode = PostalCode;
         }
     }
 }

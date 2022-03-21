@@ -28,39 +28,27 @@ public class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Getting Connection ...");
-        MySqlConnection conn = DBUtils.GetDBConnection();
-        List<city> citylist = new List<city>();
+        MainAsync(args).GetAwaiter().GetResult();
+    }
 
+    static async Task MainAsync(string[] args)
+    {
+        Person person = new Person();
 
-        try
+        bool result = await person.SetCity();
+        person.SetNameAndGender();
+
+        //Only get name and city and postal code
+        person.GetData(out string name, out _, out _, out _, out _, out _, out _, out string cityName, out int postalCode);
+
+        if (result)
         {
-            Console.WriteLine("Openning Connection ...");
-
-            conn.Open();
-
-            //SQL Query to execute
-            //selecting from postal code
-            string sql = "select * from postal_code";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            MySqlDataReader rdr = cmd.ExecuteReader();
-
-            //read the data
-            while (rdr.Read())
-            {
-                citylist.Add(new city(Convert.ToInt32(rdr[0]),rdr[1].ToString())); 
-            }
-            Console.WriteLine(citylist[10].PostalCode + " " + citylist[10].CityName);
-            rdr.Close();
-
-            Console.WriteLine("Connection successful!");
+            //One way of getting data
+            Console.WriteLine(person.CityName + " " + person.PostalCode);
+            Console.WriteLine(person.FullName);
+            //Second way of getting data
+            Console.WriteLine(name);
         }
-        catch (Exception e)
-        {
-            Console.WriteLine("Error: " + e.Message);
-        }
-
-        Console.Read();
     }
 }
 
