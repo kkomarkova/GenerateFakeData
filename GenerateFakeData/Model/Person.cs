@@ -178,5 +178,10 @@ namespace GenerateFakeData.Model
 
             Door = DoorToReturn;
         }
+        //Reading city and postalcode from Address.sql
+        public async Task SetCity()
+        {
+
+        }
     }
 }
