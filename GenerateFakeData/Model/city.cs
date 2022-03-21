@@ -10,7 +10,6 @@ namespace GenerateFakeData.Model
     {
         public int PostalCode { get; set; }
         public string CityName { get; set; }
-        public int V { get; }
 
         public city(int PostalCode, string CityName)
         {
