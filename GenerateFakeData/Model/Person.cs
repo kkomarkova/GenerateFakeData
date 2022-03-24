@@ -76,7 +76,9 @@ namespace GenerateFakeData.Model
             //GetHasCode - returns the hash code of Guid
             Random gen = new Random(Guid.NewGuid().GetHashCode());
             int range = (DateTime.Today - start).Days;
-            return start.AddDays(gen.Next(range)).ToString(outputDateFormat);
+            DateOfBirth = start.AddDays(gen.Next(range)).ToString(outputDateFormat);
+            return DateOfBirth;
+        
         }
 
         public void GenerateCprNumber(bool isMale)
