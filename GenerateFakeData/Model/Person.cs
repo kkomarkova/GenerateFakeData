@@ -11,6 +11,10 @@ namespace GenerateFakeData.Model
 {
     public class Person
     {        
+        int[] starters = new int[] {2, 30, 31, 40, 41, 42, 50, 51, 52, 53, 60, 61, 71, 81, 91, 92, 93,
+            342, 344, 345, 346, 347, 348, 349, 356, 357, 359, 362, 365, 366, 389, 398, 431, 441, 462, 466,  468,  472,  474,  476,  478,  485,
+            486,  488, 489,  493, 494, 495, 496,  498, 499,  542, 543,  545,  551, 552, 556, 571, 572, 573, 574, 577, 579, 584, 586, 587, 589,
+            597, 598, 627, 629, 641, 649, 658, 662, 663, 664, 665, 667, 692, 693, 694, 697, 771, 772, 782, 783, 785, 786, 788, 789, 826, 827,829};
         public string FullName { get; set; }
         public string Gender { get; set; }
         public string CprNumber { get; set; }
@@ -98,13 +102,21 @@ namespace GenerateFakeData.Model
             }
         }
 
+        //Validator of CprNumber
+        public bool ValidateCpr(string cprToTest)
+        {
+            int firstTwoDigits = Int32.Parse(cprToTest.Substring(0,2));
+            int secondTwoDigits = Int32.Parse(cprToTest.Substring(2,2));
+            // here we dont check for months that have 28/29/30 days, but..
+            bool validDateMonth = (firstTwoDigits < 32 && secondTwoDigits < 13);
+            int lastDigit = cprToTest[cprToTest.Length - 1];
+            bool validMale = (lastDigit % 2 == 1) && (Gender.Equals("male"));
+            bool validFemale = (lastDigit % 2 == 0) && (Gender.Equals("female"));
+            return cprToTest.StartsWith(DateOfBirth.ToString()) && (cprToTest.Length == 10) && validDateMonth && (validMale || validFemale);
+        }
+
         public void SetRandomPhoneNumber()
         {
-            int[] starters = new int[] {2, 30, 31, 40, 41, 42, 50, 51, 52, 53, 60, 61, 71, 81, 91, 92, 93,
-            342, 344, 345, 346, 347, 348, 349, 356, 357, 359, 362, 365, 366, 389, 398, 431, 441, 462, 466,  468,  472,  474,  476,  478,  485,
-            486,  488, 489,  493, 494, 495, 496,  498, 499,  542, 543,  545,  551, 552, 556, 571, 572, 573, 574, 577, 579, 584, 586, 587, 589,
-            597, 598, 627, 629, 641, 649, 658, 662, 663, 664, 665, 667, 692, 693, 694, 697, 771, 772, 782, 783, 785, 786, 788, 789, 826, 827,829};
-
             string Generated = "";
             Random Rnd = new Random();
             int NumberLength = 8;
@@ -118,7 +130,13 @@ namespace GenerateFakeData.Model
             {
                 Generated += Rnd.Next(0, 10);
             }
+            ValidatePhoneNumber(Generated);
             PhoneNumber = Generated;
+        }
+        //Validator of Phone number
+        public bool ValidatePhoneNumber(string numberToTest)
+        {
+            return starters.Any(x => numberToTest.StartsWith(x.ToString())) && (numberToTest.Length == 8);
         }
         public string SetStreet()
         {
