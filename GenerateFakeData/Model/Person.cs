@@ -1,4 +1,4 @@
-﻿using GenerateFakeData.Database;
+using GenerateFakeData.Database;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -82,24 +82,26 @@ namespace GenerateFakeData.Model
         public void GenerateCprNumber(bool isMale)
         {
             Random rnd = new Random();
+            string generatedCprNumber = "";
             if(DateOfBirth == null)
             {
                 DateOfBirth = GenerateDateofBirth();
             }
-            CprNumber += DateOfBirth;
+            generatedCprNumber += DateOfBirth;
 
-            CprNumber += rnd.Next(001, 1000);
+            generatedCprNumber += rnd.Next(001, 1000);
 
             if (isMale)
             {
                 //To generate an even number in the range 0-9
-                CprNumber += 1 + 2 * rnd.Next(5);
+                generatedCprNumber += 1 + 2 * rnd.Next(5);
             }
             else
             {
                 //To generate an odd number in the range 0-9
-                CprNumber += 2 * rnd.Next(5);
+                generatedCprNumber += 2 * rnd.Next(5);
             }
+            CprNumber = generatedCprNumber;
         }
 
         //Validator of CprNumber
