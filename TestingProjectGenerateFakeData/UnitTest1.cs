@@ -7,7 +7,7 @@ namespace TestingProjectGenerateFakeData
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }
