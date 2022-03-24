@@ -51,28 +51,5 @@ namespace TestingProjectGenerateFakeData
             Assert.False(isValid);
         }
         #endregion
-
-        #region Validate Cpr Validator
-
-        //10 digits
-        [Fact]
-        public void IfValidCpr_ReturnTrue()
-        {
-            string validcprToTest = "2222222222";
-            bool isValid = person.ValidatePhoneNumber(validcprToTest);
-            Assert.True(isValid);
-        }
-
-        //Starting with DateofBirth
-        [Fact]
-        public void IfValidCpr_ReturnFalseBecauseNotStartingwithDateofBirth()
-        {
-            string validDateofBirthToTest = "ddMMyy";
-            bool isValid = person.ValidatePhoneNumber(validDateofBirthToTest);
-            Assert.False(isValid);
-        }
-        // Zde jsem skoncila :-) TO GO ----> Validatovat Validatory CPR a potom dopsat testy v CprTest class.
-
-        #endregion
     }
 }

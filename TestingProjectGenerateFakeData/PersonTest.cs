@@ -80,6 +80,21 @@ namespace TestingProjectGenerateFakeData
             Assert.Equal(6, numberToTest.Length);
         }
 
+        // integration test
+        [Fact]
+        public void IfCprIsValid()
+        {
+            // arrange 
+            var person = new Person();
+            // act
+            person.GenerateDateofBirth();
+            person.GenerateCprNumber(true);
+            string numberToTest = person.CprNumber;
+            bool isValid = person.ValidateCpr("male", numberToTest, person.DateOfBirth);
+
+            // assert
+            Assert.True(isValid);
+        }
         // TODO: fix this one
         [Fact]
         public void IfCprNumberMatchesDoB_AndHas10Digits_ReturnTrue()
