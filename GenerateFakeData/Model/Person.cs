@@ -1,4 +1,4 @@
-using GenerateFakeData.Database;
+﻿using GenerateFakeData.Database;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -107,16 +107,31 @@ namespace GenerateFakeData.Model
         }
 
         //Validator of CprNumber
-        public bool ValidateCpr(string cprToTest)
+        public bool ValidateCpr(string genderName, string cprToTest, string dateOfBirth)
         {
-            int firstTwoDigits = Int32.Parse(cprToTest.Substring(0,2));
-            int secondTwoDigits = Int32.Parse(cprToTest.Substring(2,2));
-            // here we dont check for months that have 28/29/30 days, but..
+            bool validDateMonth = ValidateCprMonth(cprToTest);
+
+            bool validGender = ValidateCprLastDigit(genderName, cprToTest);
+
+            return cprToTest.StartsWith(dateOfBirth) && (cprToTest.Length == 10) 
+                && validDateMonth 
+                && validGender;
+        }
+
+        private static bool ValidateCprMonth(string cprToTest)
+        {
+            int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
+            int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
+            // TODO: here we dont check for months that have 28/29/30 days, but..
             bool validDateMonth = (firstTwoDigits < 32 && secondTwoDigits < 13);
+            return validDateMonth;
+        }
+
+        private bool ValidateCprLastDigit(string genderName, string cprToTest) {
             int lastDigit = cprToTest[cprToTest.Length - 1];
-            bool validMale = (lastDigit % 2 == 1) && (Gender.Equals("male"));
-            bool validFemale = (lastDigit % 2 == 0) && (Gender.Equals("female"));
-            return cprToTest.StartsWith(DateOfBirth.ToString()) && (cprToTest.Length == 10) && validDateMonth && (validMale || validFemale);
+            bool validMale = (lastDigit % 2 == 1) && (genderName.Equals("male"));
+            bool validFemale = (lastDigit % 2 == 0) && (genderName.Equals("female"));
+            return validMale || validFemale;
         }
 
         public void SetRandomPhoneNumber()
