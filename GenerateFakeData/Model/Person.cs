@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,13 +25,32 @@ namespace GenerateFakeData.Model
 
         private static Random random = new Random();
 
+        public Person(string fullName, string gender, string cprNumber, string phoneNumber, string door, 
+            string floor, string street, string streetNumber, string cityName, int postalCode, string dateOfBirth)
+        {
+            FullName = fullName;
+            Gender = gender;
+            CprNumber = cprNumber;
+            PhoneNumber = phoneNumber;
+            Door = door;
+            Floor = floor;
+            Street = street;
+            StreetNumber = streetNumber;
+            CityName = cityName;
+            PostalCode = postalCode;
+            DateOfBirth = dateOfBirth;
+        }
+        public Person()
+        {
+        }
+
         public async Task<bool> GenerateAllInfo()
         {
             try
             {
                 SetNameAndGender();
                 DateOfBirth = GenerateDateofBirth();
-                GenerateCprNumber(DateOfBirth, Gender == "male");
+                GenerateCprNumber(Gender == "male");
                 SetRandomPhoneNumber();
                 await SetCity();
                 SetFloor();
@@ -41,10 +61,11 @@ namespace GenerateFakeData.Model
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }            
         }
-        private string GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
+        public string GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
             DateTime start = new DateTime(startYear, 1, 1);
             //GUID - broader version of numbers, guaranteed to be unique across tables
@@ -54,10 +75,14 @@ namespace GenerateFakeData.Model
             return start.AddDays(gen.Next(range)).ToString(outputDateFormat);
         }
 
-        private void GenerateCprNumber(string DoB, bool isMale)
+        public void GenerateCprNumber(bool isMale)
         {
             Random rnd = new Random();
-            CprNumber += DoB;
+            if(DateOfBirth == null)
+            {
+                DateOfBirth = GenerateDateofBirth();
+            }
+            CprNumber += DateOfBirth;
 
             CprNumber += rnd.Next(001, 1000);
 
@@ -73,7 +98,7 @@ namespace GenerateFakeData.Model
             }
         }
 
-        private void SetRandomPhoneNumber()
+        public void SetRandomPhoneNumber()
         {
             int[] starters = new int[] {2, 30, 31, 40, 41, 42, 50, 51, 52, 53, 60, 61, 71, 81, 91, 92, 93,
             342, 344, 345, 346, 347, 348, 349, 356, 357, 359, 362, 365, 366, 389, 398, 431, 441, 462, 466,  468,  472,  474,  476,  478,  485,
@@ -95,7 +120,7 @@ namespace GenerateFakeData.Model
             }
             PhoneNumber = Generated;
         }
-        private string SetStreet()
+        public string SetStreet()
         {
             // lets say we want our street names to be at least 6 and at most 16 characters long, so that it makes *some* sense
             int Length = random.Next(6, 17);
@@ -107,7 +132,7 @@ namespace GenerateFakeData.Model
             return char.ToUpper(StreetName[0]) + StreetName.Substring(1);
         }
 
-        private void SetStreetNumber()
+        public void SetStreetNumber()
         {
             const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string StreetNumber = random.Next(1, 1000).ToString();
@@ -126,7 +151,7 @@ namespace GenerateFakeData.Model
             this.StreetNumber = StreetNumber;
         }
 
-        private void SetFloor()
+        public void SetFloor()
         {
             // floor number is either "st" or a number 1-99, so we take random number, if we get 0, we turn that into "st", otherwise just return
             string FloorToReturn;
@@ -140,7 +165,7 @@ namespace GenerateFakeData.Model
             this.Floor = FloorToReturn;
         }
 
-        private void SetDoor()
+        public void SetDoor()
         {
             // final string that will be returned
             string DoorToReturn = "";
@@ -190,7 +215,7 @@ namespace GenerateFakeData.Model
             Door = DoorToReturn;
         }
         //Reading city and postalcode from Address.sql
-        private async Task<bool> SetCity()
+        public async Task<bool> SetCity()
         {
             MySqlConnection conn = DBUtils.GetDBConnection();
             List<city> citylist = new List<city>();
@@ -203,7 +228,7 @@ namespace GenerateFakeData.Model
                 //selecting from postal code
                 string sql = "select * from postal_code";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                MySqlDataReader rdr = cmd.ExecuteReader();
+                DbDataReader rdr = await cmd.ExecuteReaderAsync();
 
                 //read the data + create a list of the cities read from the database
                 while (rdr.Read())
@@ -223,11 +248,12 @@ namespace GenerateFakeData.Model
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
 
-        private void SetNameAndGender()
+        public void SetNameAndGender()
         {
             data.NameGenderGenerator nameGenderGenerator = new data.NameGenderGenerator();
             nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
