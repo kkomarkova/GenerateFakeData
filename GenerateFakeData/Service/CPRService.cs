@@ -41,16 +41,12 @@ public class CPRService
 
         private bool ValidateCprMonth(string cprToTest)
         {
-            try {
-                int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
-                int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
-                int yearDigits = Int32.Parse(cprToTest.Substring(4, 2));
-                new DateTime(yearDigits, secondTwoDigits, firstTwoDigits);
-                return true;    
-            } catch (ArgumentOutOfRangeException) {
-                Console.WriteLine("Date range out of bounds.");
-                return false;
-            }
+            DateService dateService = new();
+            int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
+            int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
+            int yearDigits = Int32.Parse(cprToTest.Substring(4, 2));
+            
+            return dateService.IsDateValid(firstTwoDigits, secondTwoDigits, yearDigits);
         }
 
         private bool ValidateCprLastDigit(string genderName, string cprToTest) {
