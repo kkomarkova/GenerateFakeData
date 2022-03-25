@@ -45,7 +45,7 @@ public class Program
         }
     }
 
-    public string showAllFunctionality()
+    public void showAllFunctionality()
     {
         Console.WriteLine("Functionality 1: generate CPR: ");
         Console.WriteLine("Functionality 2: generate full name and gender: ");
