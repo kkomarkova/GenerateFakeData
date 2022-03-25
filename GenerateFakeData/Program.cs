@@ -45,5 +45,18 @@ public class Program
         }
     }
 
+    public string showAllFunctionality()
+    {
+        Console.WriteLine("Functionality 1: generate CPR: ");
+        Console.WriteLine("Functionality 2: generate full name and gender: ");
+        Console.WriteLine("Functionality 3: generate full name, gender and DoB: ");
+        Console.WriteLine("Functionality 4: generate CPR, full name and gender: ");
+        Console.WriteLine("Functionality 5: generate CPR, full name, gender and DoB: ");
+        Console.WriteLine("Functionality 6: generate an address: ");
+        Console.WriteLine("Functionality 7: generate phone number: ");
+        Console.WriteLine("Functionality 8: generate all info for one person: ");
+        Console.WriteLine("Functionality 9: generate all info for bulk: ");
+    }
+
 }
 
