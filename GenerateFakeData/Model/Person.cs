@@ -1,11 +1,6 @@
 ﻿using GenerateFakeData.Database;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GenerateFakeData.Model
 {
@@ -166,7 +161,8 @@ namespace GenerateFakeData.Model
                 .Select(s => s[random.Next(s.Length)]).ToArray());
 
             // returning so that the first letter is capitalized and others are lower case
-            return char.ToUpper(StreetName[0]) + StreetName.Substring(1);
+            Street = char.ToUpper(StreetName[0]) + StreetName.Substring(1);
+            return Street;
         }
 
         public void SetStreetNumber()
@@ -255,7 +251,7 @@ namespace GenerateFakeData.Model
         public async Task<bool> SetCity()
         {
             MySqlConnection conn = DBUtils.GetDBConnection();
-            List<city> citylist = new List<city>();
+            List<City> citylist = new List<City>();
 
             try
             {
@@ -270,7 +266,7 @@ namespace GenerateFakeData.Model
                 //read the data + create a list of the cities read from the database
                 while (rdr.Read())
                 {
-                    citylist.Add(new city(Convert.ToInt32(rdr[0]), rdr[1].ToString()));
+                    citylist.Add(new City(Convert.ToInt32(rdr[0]), rdr[1].ToString()));
                 }
                 rdr.Close();
 
@@ -292,7 +288,7 @@ namespace GenerateFakeData.Model
 
         public void SetNameAndGender()
         {
-            data.NameGenderGenerator nameGenderGenerator = new data.NameGenderGenerator();
+            NameGenderGenerator nameGenderGenerator = new();
             nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
             FullName = firstName + " " + lastName;
             Gender = gender;

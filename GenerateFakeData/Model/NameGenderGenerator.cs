@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace GenerateFakeData.data
+namespace GenerateFakeData.Model
 {
     public class NameGenderGenerator
     {
@@ -17,7 +17,7 @@ namespace GenerateFakeData.data
             catch
             {
             }
-            
+
         }
 
         public bool GetRandomPerson(out string firstName, out string lastName, out string gender)
@@ -26,7 +26,7 @@ namespace GenerateFakeData.data
             lastName = string.Empty;
             gender = string.Empty;
 
-            if(persons == null) return false;
+            if (persons == null) return false;
 
             //Mixing the names up for more randomness
             Random random = new Random();

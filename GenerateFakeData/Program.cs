@@ -1,8 +1,4 @@
-﻿using GenerateFakeData.data;
-using GenerateFakeData.Model;
-using System;
-using MySql.Data.MySqlClient;
-using GenerateFakeData.Database;
+﻿using GenerateFakeData.Model;
 
 
 //// See https://aka.ms/new-console-template for more information
@@ -45,8 +41,47 @@ public class Program
         }
         else
         {
-            Console.WriteLine("Generation unsucessful");
+            Console.WriteLine("Generation unsuccessful");
         }
     }
+
+    // functionality method stubs
+    public string Cpr()
+    {
+        return null;
+    }
+    public string FullNameAndGender()
+    {
+        return null;
+    }
+    public string FullNameGenderAndDob()
+    {
+        return null;
+    }
+    public string CprFullNameGender()
+    {
+        return null;
+    }
+    public string CprFullNameGenderAndDob()
+    {
+        return null;
+    }
+    public string Address()
+    {
+        return null;
+    }
+    public string PhoneNumber()
+    {
+        return null;
+    }
+    public string AllInfo()
+    {
+        return null;
+    }
+    public string AllInfoInBulk()
+    {
+        return null;
+    }
+
 }
 

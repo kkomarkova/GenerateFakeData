@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MySql.Data.MySqlClient;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
 
 namespace GenerateFakeData.Database
 {
-    internal class DBMySQLUtils
+    public class DBMySQLUtils
     {
         public static MySqlConnection
                 GetDBConnection(string host, int port, string database, string username, string password)
