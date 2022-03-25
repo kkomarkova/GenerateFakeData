@@ -23,7 +23,8 @@ public class CPRService
                 return generatedCprNumber;
             }
             else {
-                throw new Exception("Error generating CPR number");
+                System.Console.WriteLine("Error generating CPR number");
+                return null;
             }
         }
         //Validator of CprNumber
@@ -40,11 +41,20 @@ public class CPRService
 
         private bool ValidateCprMonth(string cprToTest)
         {
-            int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
-            int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
-            // TODO: here we dont check for months that have 28/29/30 days, but..
-            bool validDateMonth = (firstTwoDigits < 32 && secondTwoDigits < 13);
-            return validDateMonth;
+            try {
+                int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
+                int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
+                int yearDigits = Int32.Parse(cprToTest.Substring(4, 2));
+                new DateTime(yearDigits, secondTwoDigits, firstTwoDigits);
+                return true;    
+            } catch (ArgumentOutOfRangeException) {
+                Console.WriteLine("Date range out of bounds.");
+                return false;
+            }
+            
+            // // TODO: here we dont check for months that have 28/29/30 days, but..
+            // bool validDateMonth = (firstTwoDigits < 32 && secondTwoDigits < 13);
+            // return validDateMonth;
         }
 
         private bool ValidateCprLastDigit(string genderName, string cprToTest) {
