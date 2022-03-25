@@ -86,7 +86,7 @@
             return true;
         }
 
-        public string GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
+        public void GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
             DateOfBirth = dobGenerator.GenerateDateofBirth();
         }
