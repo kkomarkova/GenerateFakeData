@@ -80,8 +80,10 @@ namespace GenerateFakeData.Model
         public void GenerateCprNumber()
         {
             CPRService cprGenerator = new CPRService();
-            // TODO: add gender check
-
+            // do we generate missing info or throw an error? 
+            if(Gender == null) {
+                SetGender();
+            }
             if(DateOfBirth == null)
             {
                 DateOfBirth = GenerateDateofBirth();
@@ -249,9 +251,19 @@ namespace GenerateFakeData.Model
 
         public void SetNameAndGender()
         {
+            SetName();
+            SetGender();
+        }
+        private void SetName()
+        {
             NameGenderGenerator nameGenderGenerator = new();
             nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
             FullName = firstName + " " + lastName;
+        }
+        private void SetGender()
+        {
+            NameGenderGenerator nameGenderGenerator = new();
+            nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
             Gender = gender;
         }
 
