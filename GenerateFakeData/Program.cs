@@ -45,43 +45,5 @@ public class Program
         }
     }
 
-    // functionality method stubs
-    public string Cpr()
-    {
-        return null;
-    }
-    public string FullNameAndGender()
-    {
-        return null;
-    }
-    public string FullNameGenderAndDob()
-    {
-        return null;
-    }
-    public string CprFullNameGender()
-    {
-        return null;
-    }
-    public string CprFullNameGenderAndDob()
-    {
-        return null;
-    }
-    public string Address()
-    {
-        return null;
-    }
-    public string PhoneNumber()
-    {
-        return null;
-    }
-    public string AllInfo()
-    {
-        return null;
-    }
-    public string AllInfoInBulk()
-    {
-        return null;
-    }
-
 }
 
