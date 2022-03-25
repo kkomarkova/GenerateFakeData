@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 class AddressService
 {
     Random random = new();
+    List<City> citylist;
     public string GenerateStreetName()
         {
             // lets say we want our street names to be at least 6 and at most 16 characters long, so that it makes *some* sense
@@ -100,14 +101,23 @@ class AddressService
             return DoorToReturn;
         }
     //Reading city and postalcode from Address.sql
-        public async Task<(bool IsSuccess, string cityName, int postalCode)> GenerateCity()
+    public async Task<(bool IsSuccess, string cityName, int postalCode)> GenerateCity()
+    {
+        //So that the DB isn't continuously spammed
+        if(citylist != null)
         {
-            MySqlConnection conn = DBUtils.GetDBConnection();
-            List<City> citylist = new List<City>();
+            //Random city number from the list
+            int index = random.Next(0, citylist.Count);
 
-            try
-            {
-                conn.Open();
+            return (true, citylist[index].CityName, citylist[index].PostalCode);
+        }
+
+        MySqlConnection conn = DBUtils.GetDBConnection();
+        citylist = new List<City>();
+
+        try
+        {
+            conn.Open();
 
                 //SQL Query to execute
                 //selecting from postal code

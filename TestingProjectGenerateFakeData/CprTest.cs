@@ -16,11 +16,11 @@ namespace TestingProjectGenerateFakeData
         {
             //Arrange
             Person person = new Person();
-            int cpr;
+            long cpr;
             //Act
             person.Gender = "female";
             person.GenerateCprNumber();
-            cpr = Convert.ToInt32(person.CprNumber);
+            cpr = Convert.ToInt64(person.CprNumber);
             //Assert
             Assert.True(cpr % 2 == 0);
         }
@@ -30,11 +30,11 @@ namespace TestingProjectGenerateFakeData
         {
             //Arrange
             Person person = new Person();
-            int cpr;
+            long cpr;
             //Act
             person.Gender = "male";
             person.GenerateCprNumber();
-            cpr = Convert.ToInt32(person.CprNumber);
+            cpr = Convert.ToInt64(person.CprNumber);
             //Assert
             Assert.True(cpr % 2 == 1);
         }
