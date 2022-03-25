@@ -40,7 +40,6 @@ public class CPRService
 
         private bool ValidateCprMonth(string cprToTest)
         {
-            System.Console.WriteLine(cprToTest);
             int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
             int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
             // TODO: here we dont check for months that have 28/29/30 days, but..

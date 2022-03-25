@@ -24,7 +24,8 @@ public class Program
 {
     static void Main(string[] args)
     {
-        MainAsync(args).GetAwaiter().GetResult();
+        // MainAsync(args).GetAwaiter().GetResult();
+        ShowAllFunctionality();
     }
 
     static async Task MainAsync(string[] args)
@@ -45,17 +46,54 @@ public class Program
         }
     }
 
-    public void showAllFunctionality()
+    public static void ShowAllFunctionality()
     {
+        Person person = new();
+
         Console.WriteLine("Functionality 1: generate CPR: ");
+        person.SetNameAndGender();
+        person.GenerateCprNumber();
+        Console.WriteLine(person.CprNumber);
+        Console.WriteLine("");
+        
         Console.WriteLine("Functionality 2: generate full name and gender: ");
+        person.SetNameAndGender();
+        Console.WriteLine("Name: " + person.FullName + ", gender: " + person.Gender);
+        Console.WriteLine();
+
         Console.WriteLine("Functionality 3: generate full name, gender and DoB: ");
+        person.SetNameAndGender();
+        person.GenerateDateofBirth();
+        Console.WriteLine("Name: " + person.FullName + ", gender: " + person.Gender + ", DoB in ddMMyy format: " + person.DateOfBirth);
+        Console.WriteLine();
+
         Console.WriteLine("Functionality 4: generate CPR, full name and gender: ");
+        person.SetNameAndGender();
+        person.GenerateCprNumber();
+        Console.WriteLine("CPR: " + person.CprNumber + ", name: " + person.FullName + ", gender: " + person.Gender);
+        Console.WriteLine();
+
+
         Console.WriteLine("Functionality 5: generate CPR, full name, gender and DoB: ");
+        person.SetNameAndGender();
+        person.GenerateDateofBirth();
+        person.GenerateCprNumber();
+        Console.WriteLine("CPR: " + person.CprNumber + ", name: " + person.FullName + ", gender: " + person.Gender + ", DoB in ddMMyy format: " + person.DateOfBirth);
+        Console.WriteLine();
+
         Console.WriteLine("Functionality 6: generate an address: ");
+        Console.WriteLine();
+
         Console.WriteLine("Functionality 7: generate phone number: ");
+        person.SetRandomPhoneNumber();
+        Console.WriteLine("Phone number is:" + person.PhoneNumber);
+        Console.WriteLine();
+
         Console.WriteLine("Functionality 8: generate all info for one person: ");
+        Console.WriteLine();
+
         Console.WriteLine("Functionality 9: generate all info for bulk: ");
+        Console.WriteLine();
     }
 
 }
