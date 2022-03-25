@@ -86,14 +86,13 @@ namespace TestingProjectGenerateFakeData
         {
             // arrange 
             var person = new Person();
+            var cprService = new CPRService();
+            string gender = "male";
             // act
             person.GenerateDateofBirth();
-            person.GenerateCprNumber(true);
-            string numberToTest = person.CprNumber;
-            bool isValid = person.ValidateCpr("male", numberToTest, person.DateOfBirth);
-
+            person.CprNumber = cprService.GenerateCprNumber(gender, person.DateOfBirth);
             // assert
-            Assert.True(isValid);
+            Assert.NotNull(person.CprNumber);
         }
         // TODO: fix this one
         [Fact]

@@ -5,7 +5,7 @@ namespace TestingProjectGenerateFakeData
 {
     public class CprValidatorTests
     {
-        Person person = new Person();
+        CPRService cprGenerator = new CPRService();
 
         #region Validate Cpr Validator
 
@@ -16,7 +16,7 @@ namespace TestingProjectGenerateFakeData
             string gender = "male";
             string validcprToTest = "0812902221";
             string dateOfBirth = "081290";
-            bool isValid = person.ValidateCpr(gender, validcprToTest, dateOfBirth);
+            bool isValid = cprGenerator.ValidateCpr(gender, validcprToTest, dateOfBirth);
             Assert.True(isValid);
         }
 
@@ -28,7 +28,7 @@ namespace TestingProjectGenerateFakeData
             string invalidDateofBirthToTest = "ddMMyy";
             string dateOfBirth = "222222";
 
-            Assert.ThrowsAny<System.Exception>(() => person.ValidateCpr(
+            Assert.ThrowsAny<System.Exception>(() => cprGenerator.ValidateCpr(
                 gender, invalidDateofBirthToTest, dateOfBirth)
             );
         }

@@ -1,4 +1,4 @@
-using GenerateFakeData.Database;
+﻿using GenerateFakeData.Database;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
 
@@ -11,6 +11,7 @@ namespace GenerateFakeData.Model
             486,  488, 489,  493, 494, 495, 496,  498, 499,  542, 543,  545,  551, 552, 556, 571, 572, 573, 574, 577, 579, 584, 586, 587, 589,
             597, 598, 627, 629, 641, 649, 658, 662, 663, 664, 665, 667, 692, 693, 694, 697, 771, 772, 782, 783, 785, 786, 788, 789, 826, 827,829};
         public string FullName { get; set; }
+        // TODO: change to Enum
         public string Gender { get; set; }
         public string CprNumber { get; set; }
         public string PhoneNumber { get; set; }
@@ -49,7 +50,7 @@ namespace GenerateFakeData.Model
             {
                 SetNameAndGender();
                 DateOfBirth = GenerateDateofBirth();
-                GenerateCprNumber(Gender == "male");
+                GenerateCprNumber();
                 SetRandomPhoneNumber();
                 await SetCity();
                 SetFloor();
@@ -76,57 +77,17 @@ namespace GenerateFakeData.Model
         
         }
 
-        public void GenerateCprNumber(bool isMale)
+        public void GenerateCprNumber()
         {
-            Random rnd = new Random();
-            string generatedCprNumber = "";
+            CPRService cprGenerator = new CPRService();
+            // TODO: add gender check
+
             if(DateOfBirth == null)
             {
                 DateOfBirth = GenerateDateofBirth();
             }
-            generatedCprNumber += DateOfBirth;
-
-            generatedCprNumber += rnd.Next(001, 1000);
-
-            if (isMale)
-            {
-                //To generate an even number in the range 0-9
-                generatedCprNumber += 1 + 2 * rnd.Next(5);
-            }
-            else
-            {
-                //To generate an odd number in the range 0-9
-                generatedCprNumber += 2 * rnd.Next(5);
-            }
+            var generatedCprNumber = cprGenerator.GenerateCprNumber(Gender, DateOfBirth);
             CprNumber = generatedCprNumber;
-        }
-
-        //Validator of CprNumber
-        public bool ValidateCpr(string genderName, string cprToTest, string dateOfBirth)
-        {
-            bool validDateMonth = ValidateCprMonth(cprToTest);
-
-            bool validGender = ValidateCprLastDigit(genderName, cprToTest);
-
-            return cprToTest.StartsWith(dateOfBirth) && (cprToTest.Length == 10) 
-                && validDateMonth 
-                && validGender;
-        }
-
-        private static bool ValidateCprMonth(string cprToTest)
-        {
-            int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
-            int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
-            // TODO: here we dont check for months that have 28/29/30 days, but..
-            bool validDateMonth = (firstTwoDigits < 32 && secondTwoDigits < 13);
-            return validDateMonth;
-        }
-
-        private bool ValidateCprLastDigit(string genderName, string cprToTest) {
-            int lastDigit = cprToTest[cprToTest.Length - 1];
-            bool validMale = (lastDigit % 2 == 1) && (genderName.Equals("male"));
-            bool validFemale = (lastDigit % 2 == 0) && (genderName.Equals("female"));
-            return validMale || validFemale;
         }
 
         public void SetRandomPhoneNumber()
