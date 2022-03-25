@@ -65,6 +65,20 @@ namespace GenerateFakeData.Model
                 return false;
             }            
         }
+
+        public async Task<bool> GenerateWholeAddress()
+        {
+            bool success = await SetCity();
+            if (!success) return false;
+
+            SetFloor();
+            SetDoor();
+            SetStreet();
+            SetStreetNumber();
+
+            return true;
+        }
+
         public string GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
             DateTime start = new DateTime(startYear, 1, 1);
@@ -257,13 +271,13 @@ namespace GenerateFakeData.Model
         private void SetName()
         {
             NameGenderGenerator nameGenderGenerator = new();
-            nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
+            nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out _);
             FullName = firstName + " " + lastName;
         }
         private void SetGender()
         {
             NameGenderGenerator nameGenderGenerator = new();
-            nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
+            nameGenderGenerator.GetRandomPerson(out _, out _, out string gender);
             Gender = gender;
         }
 
