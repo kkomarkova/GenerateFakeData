@@ -49,7 +49,7 @@ namespace GenerateFakeData.Model
             try
             {
                 SetNameAndGender();
-                DateOfBirth = GenerateDateofBirth();
+                GenerateDateofBirth();
                 GenerateCprNumber();
                 SetRandomPhoneNumber();
                 await SetCity();
@@ -65,16 +65,10 @@ namespace GenerateFakeData.Model
                 return false;
             }            
         }
-        public string GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
+        public void GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
-            DateTime start = new DateTime(startYear, 1, 1);
-            //GUID - broader version of numbers, guaranteed to be unique across tables
-            //GetHasCode - returns the hash code of Guid
-            Random gen = new Random(Guid.NewGuid().GetHashCode());
-            int range = (DateTime.Today - start).Days;
-            DateOfBirth = start.AddDays(gen.Next(range)).ToString(outputDateFormat);
-            return DateOfBirth;
-        
+            DobService dobGenerator = new();
+            DateOfBirth = dobGenerator.GenerateDateofBirth();
         }
 
         public void GenerateCprNumber()
@@ -86,7 +80,7 @@ namespace GenerateFakeData.Model
             }
             if(DateOfBirth == null)
             {
-                DateOfBirth = GenerateDateofBirth();
+                GenerateDateofBirth();
             }
             var generatedCprNumber = cprGenerator.GenerateCprNumber(Gender, DateOfBirth);
             CprNumber = generatedCprNumber;
