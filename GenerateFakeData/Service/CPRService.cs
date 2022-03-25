@@ -51,10 +51,6 @@ public class CPRService
                 Console.WriteLine("Date range out of bounds.");
                 return false;
             }
-            
-            // // TODO: here we dont check for months that have 28/29/30 days, but..
-            // bool validDateMonth = (firstTwoDigits < 32 && secondTwoDigits < 13);
-            // return validDateMonth;
         }
 
         private bool ValidateCprLastDigit(string genderName, string cprToTest) {
