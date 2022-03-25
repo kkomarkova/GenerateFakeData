@@ -1,11 +1,18 @@
 using GenerateFakeData.Model;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace TestingProjectGenerateFakeData
 {
     public class PersonTest
     {
+        private readonly ITestOutputHelper output;
+
+        public PersonTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
         // to test one by one:
         // phoneNumber DONE, DoB, CPR, 
         //Black-box testing 
