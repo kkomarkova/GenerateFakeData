@@ -16,6 +16,11 @@
         public string DateOfBirth { get; set; }
 
         private static Random random = new Random();
+        DobService dobGenerator;
+        AddressService addressService;
+        NameGenderGenerator nameGenderGenerator;
+        PhoneNoService phoneNumberGenerator;
+        CPRService cprGenerator;
 
         public Person(string fullName, string gender, string cprNumber, string phoneNumber, string door, 
             string floor, string street, string streetNumber, string cityName, int postalCode, string dateOfBirth)
@@ -31,9 +36,19 @@
             CityName = cityName;
             PostalCode = postalCode;
             DateOfBirth = dateOfBirth;
+            addressService = new AddressService();
+            dobGenerator = new DobService();
+            nameGenderGenerator = new NameGenderGenerator();
+            phoneNumberGenerator = new PhoneNoService();
+            cprGenerator = new CPRService();
         }
         public Person()
         {
+            addressService = new AddressService();
+            dobGenerator = new DobService();
+            nameGenderGenerator = new NameGenderGenerator();
+            phoneNumberGenerator = new PhoneNoService();
+            cprGenerator = new CPRService();
         }
 
         public async Task<bool> GenerateAllInfo()
@@ -59,13 +74,11 @@
         }
         public void GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
-            DobService dobGenerator = new();
             DateOfBirth = dobGenerator.GenerateDateofBirth();
         }
 
         public void GenerateCprNumber()
         {
-            CPRService cprGenerator = new CPRService();
             // do we generate missing info or throw an error? 
             if(Gender == null) {
                 SetGender();
@@ -80,36 +93,30 @@
 
         public void SetRandomPhoneNumber()
         {
-            PhoneNoService phoneNumberGenerator = new();
             PhoneNumber = phoneNumberGenerator.GenerateRandomPhoneNumber();
         }
         public void SetStreet()
         {
-            AddressService addressService = new();
             Street = addressService.GenerateStreetName();
         }
 
         public void SetStreetNumber()
         {
-            AddressService addressService = new();
             this.StreetNumber = addressService.GenerateStreetNumber();
         }
 
         public void SetFloor()
         {
-            AddressService addressService = new();
             this.Floor = addressService.GenerateFloor();
         }
 
         public void SetDoor()
         {
-            AddressService addressService = new();
             Door = addressService.GenerateDoor();
         }
         //Reading city and postalcode from Address.sql
         public async Task<bool> SetCity()
         {
-            AddressService addressService = new();
             var generatedInformation = await addressService.GenerateCity();
             if(generatedInformation.IsSuccess){
                 CityName = generatedInformation.cityName;
@@ -126,13 +133,11 @@
         }
         private void SetName()
         {
-            NameGenderGenerator nameGenderGenerator = new();
             nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
             FullName = firstName + " " + lastName;
         }
         private void SetGender()
         {
-            NameGenderGenerator nameGenderGenerator = new();
             nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out string gender);
             Gender = gender;
         }
