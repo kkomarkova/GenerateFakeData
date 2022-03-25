@@ -101,7 +101,7 @@ namespace TestingProjectGenerateFakeData
             // assert
             Assert.NotNull(person.CprNumber);
         }
-        // TODO: fix this one
+
         [Fact]
         public void IfCprNumberMatchesDoB_AndHas10Digits_ReturnTrue()
         {
@@ -109,10 +109,9 @@ namespace TestingProjectGenerateFakeData
             var person = new Person();
             // act
             person.GenerateDateofBirth();
-            string numberToTest = person.DateOfBirth;
 
             // assert
-            Assert.Equal(6, numberToTest.Length);
+            Assert.Equal(6, person.DateOfBirth.Length);
             
         }
     }
