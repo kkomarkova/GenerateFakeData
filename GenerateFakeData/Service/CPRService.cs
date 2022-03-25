@@ -6,7 +6,7 @@ public class CPRService
             string generatedCprNumber = "";
             generatedCprNumber += dateOfBirth;
 
-            generatedCprNumber += rnd.Next(001, 1000);
+            generatedCprNumber += rnd.Next(001, 1000).ToString("000");
             
             if (genderName.Equals("male"))
             {
@@ -45,7 +45,7 @@ public class CPRService
             int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
             int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
             int yearDigits = Int32.Parse(cprToTest.Substring(4, 2));
-            
+
             return dateService.IsDateValid(firstTwoDigits, secondTwoDigits, yearDigits);
         }
 
