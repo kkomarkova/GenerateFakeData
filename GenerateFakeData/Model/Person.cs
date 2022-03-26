@@ -15,7 +15,6 @@
         public int PostalCode { get; set; }
         public string DateOfBirth { get; set; }
 
-        private static Random random = new Random();
         DobService dobGenerator;
         AddressService addressService;
         NameGenderGenerator nameGenderGenerator;
@@ -155,42 +154,5 @@
         {
             nameGenderGenerator.GetRandomPerson(out _, out _, out string gender);
             Gender = gender;
-        }
-
-            // functionality method stubs
-        public string Cpr()
-        {
-            return null;
-        }
-        public string FullNameAndGender()
-        {
-            return null;
-        }
-        public string FullNameGenderAndDob()
-        {
-            return null;
-        }
-        public string CprFullNameGender()
-        {
-            // GenerateCprNumber();
-            return null;
-        }
-        public string CprFullNameGenderAndDob()
-        {
-            // GenerateCprNumber();
-            return null;
-        }
-        public string Address()
-        {
-            return null;
-        }
-        public string AllInfo()
-        {
-            return null;
-        }
-        public string AllInfoInBulk()
-        {
-            return null;
-        }
         }
 }

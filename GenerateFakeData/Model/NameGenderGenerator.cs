@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Reflection;
-using System.Text;
 
 namespace GenerateFakeData.Model
 {
