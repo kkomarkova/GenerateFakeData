@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System.Reflection;
+using System.Text;
 
 namespace GenerateFakeData.Model
 {
@@ -10,9 +12,8 @@ namespace GenerateFakeData.Model
         {
             try
             {
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, @"data\person-names.json");
-                string[] personNames = File.ReadAllLines(path);
-                persons = JsonConvert.DeserializeObject<Persons>(string.Join("", personNames)).persons;
+                var jsonFile = Properties.Resources.person_names;
+                persons = JsonConvert.DeserializeObject<Persons>(jsonFile).persons;
             }
             catch
             {
