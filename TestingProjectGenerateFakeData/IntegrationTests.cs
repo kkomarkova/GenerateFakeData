@@ -1,9 +1,5 @@
 ﻿using GenerateFakeData.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,8 +13,9 @@ namespace TestingProjectGenerateFakeData
             //Arrange
             Person person = new Person();
             //Act
-            await person.GenerateAllInfo();
+            bool successfulGeneration = await person.GenerateAllInfo();
             //Assert
+            Assert.True(successfulGeneration);
             Assert.NotEqual("", person.FullName); //Check if there is a name
             Assert.EndsWith("male", person.Gender); //Check if there is a gender that ends with -male, i.e. male/female
             Assert.Equal(10, person.CprNumber.Length); //Checks for a 12-character string
