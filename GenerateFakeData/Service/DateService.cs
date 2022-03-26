@@ -1,6 +1,6 @@
 public class DateService
 {
-    public Boolean IsDateValid(int days, int months, int year) {
+    public bool IsDateValid(int days, int months, int year) {
         try {
             new DateTime(year, months, days);
             return true;    

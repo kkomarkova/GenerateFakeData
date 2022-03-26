@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 using GenerateFakeData.Model;
 
 namespace TestingProjectGenerateFakeData
@@ -18,7 +13,7 @@ namespace TestingProjectGenerateFakeData
             Person person = new Person();
             long cpr;
             //Act
-            person.Gender = "female";
+            person.Gender = Gender.Female;
             person.GenerateCprNumber();
             cpr = Convert.ToInt64(person.CprNumber);
             //Assert
@@ -32,7 +27,7 @@ namespace TestingProjectGenerateFakeData
             Person person = new Person();
             long cpr;
             //Act
-            person.Gender = "male";
+            person.Gender = Gender.Male;
             person.GenerateCprNumber();
             cpr = Convert.ToInt64(person.CprNumber);
             //Assert

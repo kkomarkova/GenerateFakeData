@@ -1,10 +1,10 @@
 ﻿namespace GenerateFakeData.Model
 {
+    public enum Gender { Uninitialized = 0, Male = 1, Female = 2 }
     public class Person
-    {        
+    {
         public string FullName { get; set; }
-        // TODO: change to Enum
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
         public string CprNumber { get; set; }
         public string PhoneNumber { get; set; }
         public string Door { get; set; }
@@ -19,9 +19,9 @@
         AddressService addressService;
         NameGenderGenerator nameGenderGenerator;
         PhoneNoService phoneNumberGenerator;
-        CPRService cprGenerator;
+        CprService cprGenerator;
 
-        public Person(string fullName, string gender, string cprNumber, string phoneNumber, string door, 
+        public Person(string fullName, Gender gender, string cprNumber, string phoneNumber, string door,
             string floor, string street, string streetNumber, string cityName, int postalCode, string dateOfBirth)
         {
             FullName = fullName;
@@ -39,7 +39,7 @@
             dobGenerator = new DobService();
             nameGenderGenerator = new NameGenderGenerator();
             phoneNumberGenerator = new PhoneNoService();
-            cprGenerator = new CPRService();
+            cprGenerator = new CprService();
         }
         public Person()
         {
@@ -47,7 +47,7 @@
             dobGenerator = new DobService();
             nameGenderGenerator = new NameGenderGenerator();
             phoneNumberGenerator = new PhoneNoService();
-            cprGenerator = new CPRService();
+            cprGenerator = new CprService();
         }
 
         public async Task<bool> GenerateAllInfo()
@@ -69,9 +69,9 @@
             {
                 Console.WriteLine(e);
                 return false;
-            }            
+            }
         }
-      
+
         public async Task<bool> GenerateWholeAddress()
         {
             bool success = await SetCity();
@@ -92,11 +92,12 @@
 
         public void GenerateCprNumber()
         {
-            // do we generate missing info or throw an error? 
-            if(Gender == null) {
-                SetGender();
+            // do we generate missing info or throw an error? answer Marek: we throw error as I unified the setName and setGender to one method
+            if (Gender == Gender.Uninitialized)
+            {
+                throw new Exception("Gender is not generated, generate it first");
             }
-            if(DateOfBirth == null)
+            if (DateOfBirth == null)
             {
                 GenerateDateofBirth();
             }
@@ -131,7 +132,8 @@
         public async Task<bool> SetCity()
         {
             var generatedInformation = await addressService.GenerateCity();
-            if(generatedInformation.IsSuccess){
+            if (generatedInformation.IsSuccess)
+            {
                 CityName = generatedInformation.cityName;
                 PostalCode = generatedInformation.postalCode;
             }
@@ -141,18 +143,10 @@
 
         public void SetNameAndGender()
         {
-            SetName();
-            SetGender();
-        }
-        private void SetName()
-        {
-            nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out _);
+            nameGenderGenerator.GetRandomPerson(out string firstName, out string lastName, out Gender gender);
 
             FullName = firstName + " " + lastName;
-        }
-        private void SetGender()
-        {
-            nameGenderGenerator.GetRandomPerson(out _, out _, out string gender);
             Gender = gender;
         }
+    }
 }

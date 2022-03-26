@@ -5,7 +5,7 @@ namespace TestingProjectGenerateFakeData
 {
     public class CprValidatorTests
     {
-        CPRService cprGenerator = new CPRService();
+        CprService cprGenerator = new CprService();
 
         #region Validate Cpr Validator
 
@@ -13,7 +13,7 @@ namespace TestingProjectGenerateFakeData
         [Fact]
         public void IfValidCpr_ReturnTrue()
         {
-            string gender = "male";
+            Gender gender = Gender.Male;
             string validcprToTest = "0812902221";
             string dateOfBirth = "081290";
             bool isValid = cprGenerator.ValidateCpr(gender, validcprToTest, dateOfBirth);
@@ -24,7 +24,7 @@ namespace TestingProjectGenerateFakeData
         [Fact]
         public void IfValidCpr_ReturnFalseBecauseDateIsString()
         {
-            string gender = "male";
+            Gender gender = Gender.Male;
             string invalidDateofBirthToTest = "ddMMyy";
             string dateOfBirth = "222222";
 

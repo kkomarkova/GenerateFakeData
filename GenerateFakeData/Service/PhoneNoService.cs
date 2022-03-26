@@ -22,7 +22,7 @@ public class PhoneNoService
         if(ValidatePhoneNumber(Generated)) {
             return Generated;
         }
-        System.Console.WriteLine("Invalid phone number generated.");
+        Console.WriteLine("Invalid phone number generated.");
         return null;
     }
     //Validator of Phone number

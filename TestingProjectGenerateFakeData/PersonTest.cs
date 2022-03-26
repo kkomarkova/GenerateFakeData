@@ -1,5 +1,4 @@
 using GenerateFakeData.Model;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -93,8 +92,8 @@ namespace TestingProjectGenerateFakeData
         {
             // arrange 
             var person = new Person();
-            var cprService = new CPRService();
-            string gender = "male";
+            var cprService = new CprService();
+            Gender gender = Gender.Male;
             // act
             person.GenerateDateofBirth();
             person.CprNumber = cprService.GenerateCprNumber(gender, person.DateOfBirth);

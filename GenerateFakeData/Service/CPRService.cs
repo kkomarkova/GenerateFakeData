@@ -1,6 +1,8 @@
-public class CPRService
+using GenerateFakeData.Model;
+
+public class CprService
 {
-    public string GenerateCprNumber(string genderName, string dateOfBirth)
+    public string GenerateCprNumber(Gender gender, string dateOfBirth)
         {
             Random rnd = new Random();
             string generatedCprNumber = "";
@@ -8,7 +10,7 @@ public class CPRService
 
             generatedCprNumber += rnd.Next(001, 1000).ToString("000");
             
-            if (genderName.Equals("male"))
+            if (gender == Gender.Male)
             {
                 //To generate an even number in the range 0-9
                 generatedCprNumber += 1 + 2 * rnd.Next(5);
@@ -19,20 +21,20 @@ public class CPRService
                 generatedCprNumber += 2 * rnd.Next(5);
             }
 
-            if (ValidateCpr(genderName, generatedCprNumber, dateOfBirth)) {
+            if (ValidateCpr(gender, generatedCprNumber, dateOfBirth)) {
                 return generatedCprNumber;
             }
             else {
-                System.Console.WriteLine("Error generating CPR number");
+                Console.WriteLine("Error generating CPR number");
                 return null;
             }
         }
         //Validator of CprNumber
-        public bool ValidateCpr(string genderName, string cprToTest, string dateOfBirth)
+        public bool ValidateCpr(Gender gender, string cprToTest, string dateOfBirth)
         {
             bool validDateMonth = ValidateCprMonth(cprToTest);
 
-            bool validGender = ValidateCprLastDigit(genderName, cprToTest);
+            bool validGender = ValidateCprLastDigit(gender, cprToTest);
 
             return cprToTest.StartsWith(dateOfBirth) && (cprToTest.Length == 10) 
                 && validDateMonth 
@@ -49,10 +51,10 @@ public class CPRService
             return dateService.IsDateValid(firstTwoDigits, secondTwoDigits, yearDigits);
         }
 
-        private bool ValidateCprLastDigit(string genderName, string cprToTest) {
+        private bool ValidateCprLastDigit(Gender gender, string cprToTest) {
             int lastDigit = cprToTest[cprToTest.Length - 1];
-            bool validMale = (lastDigit % 2 == 1) && (genderName.Equals("male"));
-            bool validFemale = (lastDigit % 2 == 0) && (genderName.Equals("female"));
+            bool validMale = (lastDigit % 2 == 1) && (gender == Gender.Male);
+            bool validFemale = (lastDigit % 2 == 0) && (gender == Gender.Female);
             return validMale || validFemale;
         }
 }

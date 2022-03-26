@@ -17,7 +17,7 @@ namespace TestingProjectGenerateFakeData
             //Assert
             Assert.True(successfulGeneration);
             Assert.NotEqual("", person.FullName); //Check if there is a name
-            Assert.EndsWith("male", person.Gender); //Check if there is a gender that ends with -male, i.e. male/female
+            Assert.NotEqual(Gender.Uninitialized, person.Gender); //Check if there is a gender that ends with -male, i.e. male/female TODO: Marek: I refactored, check if this what you meant
             Assert.Equal(10, person.CprNumber.Length); //Checks for a 12-character string
             Assert.Equal(Convert.ToInt64(person.CprNumber), Convert.ToInt64(person.CprNumber)); //Checks if cpr is convertible to number
             Assert.Equal(8, person.PhoneNumber.Length);
