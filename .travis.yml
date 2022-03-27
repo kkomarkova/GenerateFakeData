@@ -1,7 +1,5 @@
 language: csharp
 solution: GenerateFakeData.sln
-install:
-- travis_retry nuget restore -source "https://www.nuget.org/api/v2" GenerateFakeData.sln
 script:
-- xbuild GenerateFakeData.sln
-- mono ./packages/xunit.runner.console*/tools/xunit.console.exe ./TestingProjectGenerateFakeData/bin/Debug/TestingProjectGenerateFakeData.dll
+  - msbuild /p:Configuration=Release GenerateFakeData.sln
+  - mono ./packages/xunit.runners.*/tools/xunit.console.clr4.exe ./TestingProjectGenerateFakeData/bin/Release/TestingProjectGenerateFakeData.dll
