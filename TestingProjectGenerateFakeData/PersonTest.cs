@@ -7,19 +7,13 @@ namespace TestingProjectGenerateFakeData
 {
     public class PersonTest
     {
-        private readonly ITestOutputHelper output;
-
-        public PersonTest(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
         // to test one by one:
         // phoneNumber DONE, DoB, CPR, 
         //Black-box testing 
         //Equivalence partitioning - 3 sets of test condition into the group
 
         #region PhoneNumberTests
-        //Equivalence partioning Phone Number
+        //Equivalence partitioning Phone Number
         //Test Group 1 - Phone number can not have less than 8 numeric digits
         [Fact]
         public void IfNumberHasLessThan8Digits_ReturnTrue()
@@ -74,7 +68,7 @@ namespace TestingProjectGenerateFakeData
         #endregion
 
         [Fact]
-        public void IfDoBhas6Digits_ReturnTrue()
+        public void IfDoBHas6Digits_ReturnTrue()
         {
             // arrange 
             var person = new Person();
