@@ -2,5 +2,8 @@ language: csharp
 solution: GenerateFakeData.sln
 mono: none
 dotnet: 6.0.201
+install:
+  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
   - dotnet restore
+  - dotnet ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./TestingProjectGenerateFakeData/bin/Release/TestingProjectGenerateFakeData.dll
