@@ -1,4 +1,6 @@
-﻿namespace GenerateFakeData.Model
+﻿using GenerateFakeData.Service;
+
+namespace GenerateFakeData.Model
 {
     public enum Gender { Uninitialized = 0, Male = 1, Female = 2 }
     public class Person

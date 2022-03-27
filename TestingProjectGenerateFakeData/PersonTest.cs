@@ -1,4 +1,5 @@
 using GenerateFakeData.Model;
+using GenerateFakeData.Service;
 using Xunit;
 using Xunit.Abstractions;
 

@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using GenerateFakeData.Service;
+using Xunit;
 
 namespace TestingProjectGenerateFakeData
 {
