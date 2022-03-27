@@ -1,10 +1,7 @@
 language: csharp
 solution: GenerateFakeData.sln
-mono: none
-dotnet: 6.0.201
 install:
-  - nuget restore GenerateFakeData.sln
-  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" GenerateFakeData.sln
 script:
-  - msbuild /p:Configuration=Release GenerateFakeData.sln
-  - dotnet ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./TestingProjectGenerateFakeData/bin/Release/TestingProjectGenerateFakeData.dll
+- xbuild GenerateFakeData.sln
+- mono ./packages/xunit.runner.console*/tools/xunit.console.exe ./TestingProjectGenerateFakeData/bin/Debug/TestingProjectGenerateFakeData.dll
