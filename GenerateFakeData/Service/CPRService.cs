@@ -46,9 +46,9 @@ public class CprService
     private bool ValidateCprMonth(string cprToTest)
     {
         DateService dateService = new();
-        int firstTwoDigits = Int32.Parse(cprToTest.Substring(0, 2));
-        int secondTwoDigits = Int32.Parse(cprToTest.Substring(2, 2));
-        int yearDigits = Int32.Parse(cprToTest.Substring(4, 2));
+        int firstTwoDigits = int.Parse(cprToTest.Substring(0, 2));
+        int secondTwoDigits = int.Parse(cprToTest.Substring(2, 2));
+        int yearDigits = int.Parse(cprToTest.Substring(4, 2));
 
         return dateService.IsDateValid(firstTwoDigits, secondTwoDigits, yearDigits);
     }

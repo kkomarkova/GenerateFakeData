@@ -2,7 +2,7 @@ namespace GenerateFakeData.Service;
 
 public class DobService
 {
-    public string GenerateDateofBirth(string outputDateFormat = "ddMMyy")
+    public string GenerateDateOfBirth(string outputDateFormat = "ddMMyy")
     {
         DateTime start = new DateTime(1900, 1, 1);
         DateService dateService = new();
@@ -16,6 +16,7 @@ public class DobService
             )) {
             return dateOfBirth;
         }
+        // TODO: generate again if DoB is invalid
         else return null;
     }
 }

@@ -57,7 +57,7 @@ namespace GenerateFakeData.Model
             try
             {
                 SetNameAndGender();
-                GenerateDateofBirth();
+                GenerateDateOfBirth();
                 GenerateCprNumber();
                 SetRandomPhoneNumber();
                 await SetCity();
@@ -87,9 +87,9 @@ namespace GenerateFakeData.Model
             return true;
         }
 
-        public void GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
+        public void GenerateDateOfBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
-            DateOfBirth = dobGenerator.GenerateDateofBirth();
+            DateOfBirth = dobGenerator.GenerateDateOfBirth();
         }
 
         public void GenerateCprNumber()
@@ -101,7 +101,7 @@ namespace GenerateFakeData.Model
             }
             if (DateOfBirth == null)
             {
-                GenerateDateofBirth();
+                GenerateDateOfBirth();
             }
             var generatedCprNumber = cprGenerator.GenerateCprNumber(Gender, DateOfBirth);
             CprNumber = generatedCprNumber;

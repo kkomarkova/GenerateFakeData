@@ -7,7 +7,7 @@ namespace TestingProjectGenerateFakeData
     public class CprTest
     {
         [Fact]
-        public void TestIfFemaleCPREven()
+        public void TestIfFemaleCprEven()
         {
             //Arrange
             Person person = new Person();
@@ -21,7 +21,7 @@ namespace TestingProjectGenerateFakeData
         }
 
         [Fact]
-        public void TestIfMaleCPRUneven()
+        public void TestIfMaleCprUneven()
         {
             //Arrange
             Person person = new Person();

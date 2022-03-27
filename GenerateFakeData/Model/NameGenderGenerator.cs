@@ -11,7 +11,7 @@ namespace GenerateFakeData.Model
             try
             {
                 var jsonFile = Properties.Resources.person_names;
-                persons = JsonConvert.DeserializeObject<Persons>(jsonFile).persons;
+                persons = JsonConvert.DeserializeObject<Persons>(jsonFile)?.persons;
             }
             catch
             {
@@ -30,12 +30,12 @@ namespace GenerateFakeData.Model
             //Mixing the names up for more randomness
             Random random = new Random();
             int member = random.Next(0, persons.Count);
-            firstName = persons[member].name;
-            if(persons[member].gender.Equals("male")) {
+            firstName = persons[member].Name;
+            if(persons[member].Gender.Equals("male")) {
                 gender = Gender.Male;
             } else gender = Gender.Female;
             member = random.Next(0, persons.Count);
-            lastName = persons[member].surname;
+            lastName = persons[member].Surname;
 
             return true;
         }
@@ -47,9 +47,9 @@ namespace GenerateFakeData.Model
 
         private partial class Person
         {
-            public string name { get; set; }
-            public string surname { get; set; }
-            public string gender { get; set; }
+            public string Name { get; set; }
+            public string Surname { get; set; }
+            public string Gender { get; set; }
         }
     }
 }

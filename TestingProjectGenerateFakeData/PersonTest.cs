@@ -80,7 +80,7 @@ namespace TestingProjectGenerateFakeData
             var person = new Person();
 
             // act
-            person.GenerateDateofBirth();
+            person.GenerateDateOfBirth();
             string numberToTest = person.DateOfBirth;
 
             // assert
@@ -96,7 +96,7 @@ namespace TestingProjectGenerateFakeData
             var cprService = new CprService();
             Gender gender = Gender.Male;
             // act
-            person.GenerateDateofBirth();
+            person.GenerateDateOfBirth();
             person.CprNumber = cprService.GenerateCprNumber(gender, person.DateOfBirth);
             // assert
             Assert.NotNull(person.CprNumber);
@@ -108,7 +108,7 @@ namespace TestingProjectGenerateFakeData
             // arrange 
             var person = new Person();
             // act
-            person.GenerateDateofBirth();
+            person.GenerateDateOfBirth();
 
             // assert
             Assert.Equal(6, person.DateOfBirth.Length);
