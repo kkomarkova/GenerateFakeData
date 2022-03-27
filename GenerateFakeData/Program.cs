@@ -37,7 +37,7 @@ public class Program
         Console.WriteLine("Functionality 3: generate full name, gender and DoB: ");
         Console.ForegroundColor = ConsoleColor.White;
         person.SetNameAndGender();
-        person.GenerateDateofBirth();
+        person.GenerateDateOfBirth();
         Console.WriteLine("Name: " + person.FullName + ", gender: " + person.Gender + ", DoB in ddMMyy format: " + person.DateOfBirth);
         Console.WriteLine();
 
@@ -53,7 +53,7 @@ public class Program
         Console.WriteLine("Functionality 5: generate CPR, full name, gender and DoB: ");
         Console.ForegroundColor = ConsoleColor.White;
         person.SetNameAndGender();
-        person.GenerateDateofBirth();
+        person.GenerateDateOfBirth();
         person.GenerateCprNumber();
         Console.WriteLine("CPR: " + person.CprNumber + ", name: " + person.FullName + ", gender: " + person.Gender + ", DoB in ddMMyy format: " + person.DateOfBirth);
         Console.WriteLine();

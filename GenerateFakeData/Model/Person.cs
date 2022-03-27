@@ -1,4 +1,6 @@
-﻿namespace GenerateFakeData.Model
+﻿using GenerateFakeData.Service;
+
+namespace GenerateFakeData.Model
 {
     public enum Gender { Uninitialized = 0, Male = 1, Female = 2 }
     public class Person
@@ -55,7 +57,7 @@
             try
             {
                 SetNameAndGender();
-                GenerateDateofBirth();
+                GenerateDateOfBirth();
                 GenerateCprNumber();
                 SetRandomPhoneNumber();
                 await SetCity();
@@ -85,9 +87,9 @@
             return true;
         }
 
-        public void GenerateDateofBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
+        public void GenerateDateOfBirth(int startYear = 1900, string outputDateFormat = "ddMMyy")
         {
-            DateOfBirth = dobGenerator.GenerateDateofBirth();
+            DateOfBirth = dobGenerator.GenerateDateOfBirth();
         }
 
         public void GenerateCprNumber()
@@ -99,7 +101,7 @@
             }
             if (DateOfBirth == null)
             {
-                GenerateDateofBirth();
+                GenerateDateOfBirth();
             }
             var generatedCprNumber = cprGenerator.GenerateCprNumber(Gender, DateOfBirth);
             CprNumber = generatedCprNumber;
@@ -132,13 +134,11 @@
         public async Task<bool> SetCity()
         {
             var generatedInformation = await addressService.GenerateCity();
-            if (generatedInformation.IsSuccess)
-            {
-                CityName = generatedInformation.cityName;
-                PostalCode = generatedInformation.postalCode;
-            }
+            if (!generatedInformation.IsSuccess) return false;
+            CityName = generatedInformation.cityName;
+            PostalCode = generatedInformation.postalCode;
 
-            return generatedInformation.IsSuccess;
+            return true;
         }
 
         public void SetNameAndGender()

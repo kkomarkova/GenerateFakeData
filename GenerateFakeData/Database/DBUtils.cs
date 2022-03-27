@@ -3,17 +3,18 @@
 
 namespace GenerateFakeData.Database
 {
-    public class DBUtils
+    public static class DbUtils
     {
-        public static MySqlConnection GetDBConnection()
+        public static MySqlConnection GetDbConnection()
         {
-            string host = "ilzyz0heng1bygi8.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
-            int port = 3306;
-            string database = "sy27b9hvoxzw2vww";
-            string username = "afyc8wdc8jh58a4w";
-            string password = "mre2oikifr6lpty2";
+            // TODO: remove this data from version control
+            const string host = "ilzyz0heng1bygi8.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
+            const int port = 3306;
+            const string database = "sy27b9hvoxzw2vww";
+            const string username = "afyc8wdc8jh58a4w";
+            const string password = "mre2oikifr6lpty2";
 
-            return DBMySQLUtils.GetDBConnection(host, port, database, username, password);
+            return DbMySqlUtils.GetDbConnection(host, port, database, username, password);
         }
     }
 }

@@ -1,3 +1,5 @@
+namespace GenerateFakeData.Service;
+
 public class DateService
 {
     public bool IsDateValid(int days, int months, int year) {

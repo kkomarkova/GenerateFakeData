@@ -2,16 +2,16 @@
 
 namespace GenerateFakeData.Database
 {
-    public class DBMySQLUtils
+    public static class DbMySqlUtils
     {
         public static MySqlConnection
-                GetDBConnection(string host, int port, string database, string username, string password)
+                GetDbConnection(string host, int port, string database, string username, string password)
         {
             // Connection String.
             String connString = "Server=" + host + ";Database=" + database
                 + ";port=" + port + ";User Id=" + username + ";password=" + password;
 
-            MySqlConnection conn = new MySqlConnection(connString);
+            var conn = new MySqlConnection(connString);
 
             return conn;
         }
