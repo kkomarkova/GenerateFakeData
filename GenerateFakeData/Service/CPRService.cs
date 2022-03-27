@@ -34,6 +34,8 @@ public class CprService
     //Validator of CprNumber
     public bool ValidateCpr(Gender gender, string cprToTest, string dateOfBirth)
     {
+        if (gender == Gender.Uninitialized || cprToTest.Length == 0 ||
+            dateOfBirth.Length == 0) return false;
         bool validDateMonth = ValidateCprMonth(cprToTest);
 
         bool validGender = ValidateCprLastDigit(gender, cprToTest);
