@@ -1,2 +1,4 @@
 language: csharp
 solution: GenerateFakeData.sln
+mono: none
+dotnet: 6.0.201
