@@ -1,5 +1,7 @@
 language: csharp
 solution: GenerateFakeData.sln
+mono: none
+dotnet: 6.0.201
 script:
   - msbuild /p:Configuration=Release GenerateFakeData.sln
-  - mono ./packages/xunit.runners.*/tools/xunit.console.clr4.exe ./TestingProjectGenerateFakeData/bin/Release/TestingProjectGenerateFakeData.dll
+  - dotnet ./packages/xunit.runners.*/tools/xunit.console.clr4.exe ./TestingProjectGenerateFakeData/bin/Release/TestingProjectGenerateFakeData.dll
