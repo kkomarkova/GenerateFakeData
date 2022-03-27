@@ -7,6 +7,7 @@ namespace GenerateFakeData.Database
     {
         public static MySqlConnection GetDbConnection()
         {
+            // TODO: remove this data from version control
             const string host = "ilzyz0heng1bygi8.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
             const int port = 3306;
             const string database = "sy27b9hvoxzw2vww";

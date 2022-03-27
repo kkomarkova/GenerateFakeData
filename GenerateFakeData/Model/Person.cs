@@ -134,13 +134,11 @@ namespace GenerateFakeData.Model
         public async Task<bool> SetCity()
         {
             var generatedInformation = await addressService.GenerateCity();
-            if (generatedInformation.IsSuccess)
-            {
-                CityName = generatedInformation.cityName;
-                PostalCode = generatedInformation.postalCode;
-            }
+            if (!generatedInformation.IsSuccess) return false;
+            CityName = generatedInformation.cityName;
+            PostalCode = generatedInformation.postalCode;
 
-            return generatedInformation.IsSuccess;
+            return true;
         }
 
         public void SetNameAndGender()

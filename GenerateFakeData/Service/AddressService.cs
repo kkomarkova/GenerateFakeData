@@ -33,23 +33,13 @@ class AddressService
             streetNumber += chars[random.Next(chars.Length)];
         }
 
-        else if (optionalFollowed == 1)
-        {
-            return streetNumber;
-        }
-
         return streetNumber;
     }
     public string GenerateFloor()
     {
         // floor number is either "st" or a number 1-99, so we take random number, if we get 0, we turn that into "st", otherwise just return
-        string floorToReturn;
         int floorNumber = random.Next(0, 100);
-        if (floorNumber == 0)
-        {
-            floorToReturn = "st";
-        }
-        else floorToReturn = floorNumber.ToString();
+        var floorToReturn = floorNumber == 0 ? "st" : floorNumber.ToString();
 
         return floorToReturn;
     }
@@ -123,16 +113,16 @@ class AddressService
 
             //SQL Query to execute
             //selecting from postal code
-            string sql = "select * from postal_code";
+            const string sql = "select * from postal_code";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             DbDataReader rdr = await cmd.ExecuteReaderAsync();
 
             //read the data + create a list of the cities read from the database
-            while (rdr.Read())
+            while (await rdr.ReadAsync())
             {
                 cityList.Add(new City(Convert.ToInt32(rdr[0]), rdr[1].ToString()));
             }
-            rdr.Close();
+            await rdr.CloseAsync();
 
             //Random city number from the list
             int index = random.Next(0, cityList.Count);

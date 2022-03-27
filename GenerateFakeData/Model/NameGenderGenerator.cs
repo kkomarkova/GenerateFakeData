@@ -15,8 +15,8 @@ namespace GenerateFakeData.Model
             }
             catch
             {
+                // ignored
             }
-
         }
 
         public bool GetRandomPerson(out string firstName, out string lastName, out Gender gender)
@@ -31,9 +31,7 @@ namespace GenerateFakeData.Model
             Random random = new Random();
             int member = random.Next(0, persons.Count);
             firstName = persons[member].Name;
-            if(persons[member].Gender.Equals("male")) {
-                gender = Gender.Male;
-            } else gender = Gender.Female;
+            gender = persons[member].Gender.Equals("male") ? Gender.Male : Gender.Female;
             member = random.Next(0, persons.Count);
             lastName = persons[member].Surname;
 
