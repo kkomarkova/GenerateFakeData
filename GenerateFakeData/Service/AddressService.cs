@@ -1,19 +1,23 @@
-using System.Data.Common;
 using GenerateFakeData.Database;
 using GenerateFakeData.Model;
-using MySql.Data.MySqlClient;
 
 namespace GenerateFakeData.Service;
 
-class AddressService
+public class AddressService
 {
     Address Address { get; set; }
     Random random = new();
     List<City> cityList;
-
+    IFetchAddressInformation _fetchCityDb;
     public AddressService()
     {
         Address = new Address();
+        _fetchCityDb = new FetchAddressInformation();
+    }
+    public AddressService(IFetchAddressInformation fetchAddressInformation)
+    {
+        Address = new Address();
+        _fetchCityDb = fetchAddressInformation;
     }
 
     public async Task<Address> GenerateAddress()
@@ -117,7 +121,6 @@ class AddressService
     //Reading city and postalcode from Address.sql
     public async Task<(bool IsSuccess, string cityName, int postalCode)> GenerateCity()
     {
-        var fetchCityDb = new FetchAddressInformation();
         //So that the DB isn't continuously spammed
         if (cityList != null)
         {
@@ -128,13 +131,13 @@ class AddressService
             return (true, cityList[index].CityName, cityList[index].PostalCode);
         }
 
-        var dbResult = await fetchCityDb.FetchCityInformation();
-        cityList = dbResult.Item2;
+        var (success, cities) = await _fetchCityDb.FetchCityInformation();
+        cityList = cities;
 
         //Random city number from the list
         int indexResult = random.Next(0, cityList.Count);
         Address.City.CityName = cityList[indexResult].CityName;
         Address.City.PostalCode = cityList[indexResult].PostalCode;
-        return (dbResult.success, cityList[indexResult].CityName, cityList[indexResult].PostalCode);
+        return (success, cityList[indexResult].CityName, cityList[indexResult].PostalCode);
     }
 }
