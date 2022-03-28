@@ -26,6 +26,7 @@ class AddressService
         if (!generatedInformation.IsSuccess) return new Address();
         return Address;
     }
+
     public void GenerateStreetName()
     {
         // lets say we want our street names to be at least 6 and at most 16 characters long, so that it makes *some* sense
@@ -37,6 +38,7 @@ class AddressService
         // returning so that the first letter is capitalized and others are lower case
         Address.Street = char.ToUpper(streetName[0]) + streetName.Substring(1);
     }
+
     public void GenerateStreetNumber()
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -51,6 +53,7 @@ class AddressService
 
         Address.StreetNumber = streetNumber;
     }
+
     public void GenerateFloor()
     {
         // floor number is either "st" or a number 1-99, so we take random number, if we get 0, we turn that into "st", otherwise just return
@@ -59,6 +62,7 @@ class AddressService
 
         Address.Floor = floor;
     }
+
     public void GenerateDoor()
     {
         // final string that will be returned
@@ -95,6 +99,7 @@ class AddressService
                         door = "th";
                         break;
                 }
+
                 break;
             case 1:
                 door = numberUntilFifty.ToString();
@@ -108,11 +113,13 @@ class AddressService
 
         Address.Door = door;
     }
+
     //Reading city and postalcode from Address.sql
     public async Task<(bool IsSuccess, string cityName, int postalCode)> GenerateCity()
     {
+        var fetchCityDb = new FetchAddressInformation();
         //So that the DB isn't continuously spammed
-        if(cityList != null)
+        if (cityList != null)
         {
             //Random city number from the list
             int index = random.Next(0, cityList.Count);
@@ -121,36 +128,13 @@ class AddressService
             return (true, cityList[index].CityName, cityList[index].PostalCode);
         }
 
-        MySqlConnection conn = DbUtils.GetDbConnection();
-        cityList = new List<City>();
+        var dbResult = await fetchCityDb.FetchCityInformation();
+        cityList = dbResult.Item2;
 
-        try
-        {
-            conn.Open();
-
-            //SQL Query to execute
-            //selecting from postal code
-            const string sql = "select * from postal_code";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            DbDataReader rdr = await cmd.ExecuteReaderAsync();
-
-            //read the data + create a list of the cities read from the database
-            while (await rdr.ReadAsync())
-            {
-                cityList.Add(new City(Convert.ToInt32(rdr[0]), rdr[1].ToString()));
-            }
-            await rdr.CloseAsync();
-
-            //Random city number from the list
-            int index = random.Next(0, cityList.Count);
-            Address.City.CityName = cityList[index].CityName;
-            Address.City.PostalCode = cityList[index].PostalCode;
-            return (true, cityList[index].CityName, cityList[index].PostalCode);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            return (false, null, 0);
-        }
+        //Random city number from the list
+        int indexResult = random.Next(0, cityList.Count);
+        Address.City.CityName = cityList[indexResult].CityName;
+        Address.City.PostalCode = cityList[indexResult].PostalCode;
+        return (dbResult.success, cityList[indexResult].CityName, cityList[indexResult].PostalCode);
     }
 }
