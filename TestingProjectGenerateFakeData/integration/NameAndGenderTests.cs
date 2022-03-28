@@ -1,8 +1,9 @@
-﻿using GenerateFakeData.Model;
+﻿using System.Diagnostics.CodeAnalysis;
+using GenerateFakeData.Model;
 using Xunit;
 
 namespace TestingProjectGenerateFakeData.integration;
-
+[ExcludeFromCodeCoverage]
 public class NameAndGenderTests
 {
     [Fact]

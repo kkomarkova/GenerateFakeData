@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
+using GenerateFakeData.Model;
 using GenerateFakeData.Service;
 using Xunit;
 
 namespace TestingProjectGenerateFakeData.integration;
-
+[ExcludeFromCodeCoverage]
 public class AddressTests
 {
     [Fact]
@@ -19,10 +21,11 @@ public class AddressTests
     public async Task IfSuccessfulCityGenerateWithExistingCityList_ReturnTrue()
     {
         var addressService = new AddressService();
-        var randomAddress = await addressService.GenerateAddress();
+        Address randomAddress = await addressService.GenerateAddress();
+        var randomPostCode = randomAddress.City.PostalCode;
         var regeneratedRandomAddress = await addressService.GenerateAddress();
 
-        Assert.NotEqual(randomAddress.City.PostalCode, regeneratedRandomAddress.City.PostalCode);
+        Assert.NotEqual(randomPostCode, regeneratedRandomAddress.City.PostalCode);
         Assert.NotNull(randomAddress);
         Assert.NotNull(regeneratedRandomAddress.City.CityName);
     }

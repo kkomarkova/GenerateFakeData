@@ -28,7 +28,7 @@ public class AddressService
         GenerateDoor();
         var generatedInformation = await GenerateCity();
         if (generatedInformation.IsSuccess && ValidateAddress(Address)) return Address;
-        else return new Address();
+        return new Address();
     }
 
     public void GenerateStreetName()

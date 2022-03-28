@@ -17,20 +17,24 @@ namespace TestingProjectGenerateFakeData.unit
 
         //10 digits
         [Theory]
+        // male CPR ends with an odd number
         [InlineData(Gender.Male, "0812902221", "081290")]
         [InlineData(Gender.Male, "0812902223", "081290")]
         [InlineData(Gender.Male, "0812902225", "081290")]
         [InlineData(Gender.Male, "0812902227", "081290")]
         [InlineData(Gender.Male, "0812902229", "081290")]
+        // male CPR ends with an odd number
         [InlineData(Gender.Female, "1606668888", "160666")]
         public void IfValidCpr_ReturnTrue(Gender gender, string cprNumber, string dateOfBirth)
         {
             bool isValid = _cprGenerator.ValidateCpr(gender, cprNumber, dateOfBirth);
             Assert.True(isValid);
+            Assert.Equal(10, cprNumber.Length);
+            Assert.Equal(6, dateOfBirth.Length);
         }
 
         [Theory]
-        // last digit doesn't match gender
+        // last digit doesn't match gender (male should be odd)
         [InlineData(Gender.Male, "0812902220", "081290")]
         [InlineData(Gender.Male, "0812902222", "081290")]
         [InlineData(Gender.Male, "0812902224", "081290")]
