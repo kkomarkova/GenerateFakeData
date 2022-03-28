@@ -87,7 +87,8 @@ public class Program
         Console.ForegroundColor = ConsoleColor.White;
 
         // TODO: added this so that we can randomize the number of generated people 2-100, for now the upper boundary is 10 for testing purposes, change later
-        int numberOfPeopleToGenerate = random.Next(2, 101);
+        //int numberOfPeopleToGenerate = random.Next(2, 101);
+        int numberOfPeopleToGenerate = 100;
         Console.WriteLine("Generating info for " + numberOfPeopleToGenerate + " people: ");
         for(int i = 1; i < numberOfPeopleToGenerate+1; i++)
         {
