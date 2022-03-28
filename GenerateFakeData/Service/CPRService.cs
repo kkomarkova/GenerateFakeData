@@ -34,8 +34,8 @@ public class CprService
     //Validator of CprNumber
     public bool ValidateCpr(Gender gender, string cprToTest, string dateOfBirth)
     {
-        if (gender == Gender.Uninitialized || cprToTest.Length == 0 ||
-            dateOfBirth.Length == 0) return false;
+        if (gender == Gender.Uninitialized || cprToTest.Length != 10 ||
+            dateOfBirth.Length != 6) return false;
         bool validDateMonth = ValidateCprMonth(cprToTest);
 
         bool validGender = ValidateCprLastDigit(gender, cprToTest);
@@ -48,11 +48,16 @@ public class CprService
     private bool ValidateCprMonth(string cprToTest)
     {
         DateService dateService = new();
-        int firstTwoDigits = int.Parse(cprToTest.Substring(0, 2));
-        int secondTwoDigits = int.Parse(cprToTest.Substring(2, 2));
-        int yearDigits = int.Parse(cprToTest.Substring(4, 2));
-
-        return dateService.IsDateValid(firstTwoDigits, secondTwoDigits, yearDigits);
+        try {
+            int firstTwoDigits = int.Parse(cprToTest.Substring(0, 2));
+            int secondTwoDigits = int.Parse(cprToTest.Substring(2, 2));
+            int yearDigits = int.Parse(cprToTest.Substring(4, 2));
+            return dateService.IsDateValid(firstTwoDigits, secondTwoDigits, yearDigits);
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     private bool ValidateCprLastDigit(Gender gender, string cprToTest) {
