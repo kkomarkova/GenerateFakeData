@@ -1,10 +1,11 @@
-﻿using GenerateFakeData.Model;
-using GenerateFakeData.Service;
+﻿using GenerateFakeData.Service;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace TestingProjectGenerateFakeData.integration
 {
+    [ExcludeFromCodeCoverage]  
     public class DateOfBirthTests
     {
         [Fact]

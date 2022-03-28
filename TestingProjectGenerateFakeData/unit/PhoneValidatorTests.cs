@@ -1,8 +1,10 @@
-﻿using GenerateFakeData.Service;
+﻿using System.Diagnostics.CodeAnalysis;
+using GenerateFakeData.Service;
 using Xunit;
 
 namespace TestingProjectGenerateFakeData.unit
 {
+    [ExcludeFromCodeCoverage]  
     public class PhoneValidatorTests
     {
         private readonly PhoneNoService _phoneGenerator = new();

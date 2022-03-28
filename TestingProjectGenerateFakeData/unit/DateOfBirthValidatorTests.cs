@@ -1,9 +1,10 @@
-﻿using GenerateFakeData.Model;
+﻿using System.Diagnostics.CodeAnalysis;
 using GenerateFakeData.Service;
 using Xunit;
 
 namespace TestingProjectGenerateFakeData.unit
 {
+    [ExcludeFromCodeCoverage]  
     public class DateOfBirthValidatorTests
     {
         [Theory]

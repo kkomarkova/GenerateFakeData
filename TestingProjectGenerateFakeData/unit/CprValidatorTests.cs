@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using GenerateFakeData.Model;
 using GenerateFakeData.Service;
 using Xunit;
 
 namespace TestingProjectGenerateFakeData.unit
 {
+    [ExcludeFromCodeCoverage]  
     public class CprValidatorTests
     {
         private readonly CprService _cprGenerator;

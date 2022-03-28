@@ -1,10 +1,13 @@
-﻿using GenerateFakeData.Model;
+using GenerateFakeData.Model;
 using GenerateFakeData.Service;
 using Xunit;
+﻿using System.Diagnostics.CodeAnalysis;
+
 
 namespace TestingProjectGenerateFakeData.unit
 {
-    public class AddressValidatorTests
+    [ExcludeFromCodeCoverage]  
+    class AddressValidatorTests
     {
         private readonly AddressService _addressService;
 
