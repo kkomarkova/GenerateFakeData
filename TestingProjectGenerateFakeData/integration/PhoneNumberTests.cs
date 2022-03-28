@@ -1,9 +1,10 @@
 ﻿using GenerateFakeData.Service;
 using Xunit;
-using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TestingProjectGenerateFakeData.integration
 {
+    [ExcludeFromCodeCoverage]
     public class PhoneNumberTests
     {
         [Fact]
