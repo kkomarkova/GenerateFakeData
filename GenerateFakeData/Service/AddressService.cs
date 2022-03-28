@@ -147,11 +147,6 @@ public class AddressService
 
     public bool ValidateAddress(Address address)
     {
-        bool isValid = ValidateStreetName(address.Street);
-        bool isValid2 = ValidateDoor(address.Door);
-        bool isValid3 = ValidateFloor(address.Floor);
-        bool isValid4 = ValidateStreetNumber(address.StreetNumber);
-
         return ValidateStreetName(address.Street) && ValidateDoor(address.Door) && ValidateFloor(address.Floor) && ValidateStreetNumber(address.StreetNumber);
     }
     public bool ValidateStreetName(string name)
@@ -185,17 +180,17 @@ public class AddressService
         char firstChar = door[0];
         bool hasPosition = door.Contains("mf") || door.Contains("tv") || door.Contains("th");
         int parsed;
-        bool doorNumber = int.TryParse(door, out parsed);
+        bool success = int.TryParse(door, out parsed);
         bool isOneToFifty;
-        if (doorNumber) { isOneToFifty = parsed > 0 && parsed < 51; } else isOneToFifty = false;
+        if (success) { isOneToFifty = parsed > 0 && parsed < 51; } else isOneToFifty = false;
 
         int parsedAgain;
-        bool doorNumberAgain = int.TryParse(door.Substring(2), out parsedAgain);
+        bool successful = int.TryParse(door.Substring(2), out parsedAgain);
         bool longFormatOne;
 
         int parsedAgainAgain;
-        bool doorNumberAgainAgain = int.TryParse(door.Substring(1), out parsedAgainAgain);
-        if (doorNumberAgain)
+        bool alsoSuccessful = int.TryParse(door.Substring(1), out parsedAgainAgain);
+        if (successful && alsoSuccessful)
         {
             longFormatOne = (firstChar >= 'a' && firstChar <= 'z' && door[1] == '-' && (parsedAgain > 0 && parsedAgain < 1000)) ||
             (firstChar >= 'a' && firstChar <= 'z' && door[1] != '-' && (parsedAgainAgain > 0 && parsedAgainAgain < 1000));
