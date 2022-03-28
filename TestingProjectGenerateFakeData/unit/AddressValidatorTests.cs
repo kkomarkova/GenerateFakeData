@@ -6,8 +6,8 @@ using Xunit;
 
 namespace TestingProjectGenerateFakeData.unit
 {
-    [ExcludeFromCodeCoverage]  
-    class AddressValidatorTests
+    [ExcludeFromCodeCoverage]
+    public class AddressValidatorTests
     {
         private readonly AddressService _addressService;
 
