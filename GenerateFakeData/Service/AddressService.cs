@@ -7,9 +7,26 @@ namespace GenerateFakeData.Service;
 
 class AddressService
 {
+    Address Address { get; set; }
     Random random = new();
     List<City> cityList;
-    public string GenerateStreetName()
+
+    public AddressService()
+    {
+        Address = new Address();
+    }
+
+    public async Task<Address> GenerateAddress()
+    {
+        GenerateStreetName();
+        GenerateStreetNumber();
+        GenerateFloor();
+        GenerateDoor();
+        var generatedInformation = await GenerateCity();
+        if (!generatedInformation.IsSuccess) return new Address();
+        return Address;
+    }
+    public void GenerateStreetName()
     {
         // lets say we want our street names to be at least 6 and at most 16 characters long, so that it makes *some* sense
         int length = random.Next(6, 17);
@@ -18,10 +35,9 @@ class AddressService
             .Select(s => s[random.Next(s.Length)]).ToArray());
 
         // returning so that the first letter is capitalized and others are lower case
-        string street = char.ToUpper(streetName[0]) + streetName.Substring(1);
-        return street;
+        Address.Street = char.ToUpper(streetName[0]) + streetName.Substring(1);
     }
-    public string GenerateStreetNumber()
+    public void GenerateStreetNumber()
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string streetNumber = random.Next(1, 1000).ToString();
@@ -33,20 +49,20 @@ class AddressService
             streetNumber += chars[random.Next(chars.Length)];
         }
 
-        return streetNumber;
+        Address.StreetNumber = streetNumber;
     }
-    public string GenerateFloor()
+    public void GenerateFloor()
     {
         // floor number is either "st" or a number 1-99, so we take random number, if we get 0, we turn that into "st", otherwise just return
         int floorNumber = random.Next(0, 100);
-        var floorToReturn = floorNumber == 0 ? "st" : floorNumber.ToString();
+        var floor = floorNumber == 0 ? "st" : floorNumber.ToString();
 
-        return floorToReturn;
+        Address.Floor = floor;
     }
-    public string GenerateDoor()
+    public void GenerateDoor()
     {
         // final string that will be returned
-        string doorToReturn = "";
+        string door = "";
 
         // there are three ways we should produce the door number, either "tv" or "42" or "d-14", to randomly determine which to use, introducing a variable
         // 0= just tv th mf, 1= number 1-50, 2= letter optional dash and number 1-999
@@ -70,27 +86,27 @@ class AddressService
                 switch (position)
                 {
                     case 0:
-                        doorToReturn = "tv";
+                        door = "tv";
                         break;
                     case 1:
-                        doorToReturn = "mf";
+                        door = "mf";
                         break;
                     case 2:
-                        doorToReturn = "th";
+                        door = "th";
                         break;
                 }
                 break;
             case 1:
-                doorToReturn = numberUntilFifty.ToString();
+                door = numberUntilFifty.ToString();
                 break;
             case 2:
-                doorToReturn = hasDash == 1
+                door = hasDash == 1
                     ? randomChar + "-" + numberUntilThousand.ToString()
                     : randomChar + numberUntilThousand.ToString();
                 break;
         }
 
-        return doorToReturn;
+        Address.Door = door;
     }
     //Reading city and postalcode from Address.sql
     public async Task<(bool IsSuccess, string cityName, int postalCode)> GenerateCity()
@@ -100,7 +116,8 @@ class AddressService
         {
             //Random city number from the list
             int index = random.Next(0, cityList.Count);
-
+            Address.City.CityName = cityList[index].CityName;
+            Address.City.PostalCode = cityList[index].PostalCode;
             return (true, cityList[index].CityName, cityList[index].PostalCode);
         }
 
@@ -126,7 +143,8 @@ class AddressService
 
             //Random city number from the list
             int index = random.Next(0, cityList.Count);
-
+            Address.City.CityName = cityList[index].CityName;
+            Address.City.PostalCode = cityList[index].PostalCode;
             return (true, cityList[index].CityName, cityList[index].PostalCode);
         }
         catch (Exception e)
