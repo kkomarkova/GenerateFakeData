@@ -17,21 +17,7 @@ namespace GenerateFakeData.Model
         NameGenderGenerator nameGenderGenerator;
         PhoneNoService phoneNumberGenerator;
         CprService cprGenerator;
-
-        public Person(string fullName, Gender gender, string cprNumber, string phoneNumber, Address address, string dateOfBirth)
-        {
-            FullName = fullName;
-            Gender = gender;
-            CprNumber = cprNumber;
-            PhoneNumber = phoneNumber;
-            Address = address;
-            DateOfBirth = dateOfBirth;
-            addressService = new AddressService();
-            dobGenerator = new DobService();
-            nameGenderGenerator = new NameGenderGenerator();
-            phoneNumberGenerator = new PhoneNoService();
-            cprGenerator = new CprService();
-        }
+        
         public Person()
         {
             addressService = new AddressService();
