@@ -10,8 +10,6 @@ namespace TestingProjectGenerateFakeData.unit
     {
         private readonly CprService _cprGenerator;
 
-        #region Validate Cpr Validator
-
         //10 digits
         [Theory]
         [InlineData(Gender.Male, "0812902221", "081290")]
