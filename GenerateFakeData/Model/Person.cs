@@ -94,10 +94,11 @@ namespace GenerateFakeData.Model
 
         public void GenerateCprNumber()
         {
-            // do we generate missing info or throw an error? answer Marek: we throw error as I unified the setName and setGender to one method
             if (Gender == Gender.Uninitialized)
             {
-                throw new Exception("Gender is not generated, generate it first");
+                Random random = new();
+                var randomGenderInt = random.Next(1, 2);
+                Gender = (Gender) randomGenderInt;
             }
             if (DateOfBirth == null)
             {
