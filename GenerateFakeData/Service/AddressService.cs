@@ -54,7 +54,7 @@ public class AddressService
         {
             streetNumber += chars[random.Next(chars.Length)];
         }
-        if (ValidateStreetNumber(streetNumber, optionalFollowed))
+        if (ValidateStreetNumber(streetNumber))
         {
             Address.StreetNumber = streetNumber;
         }
@@ -116,7 +116,7 @@ public class AddressService
                     : randomChar + numberUntilThousand.ToString();
                 break;
         }
-        if (ValidateDoor(door, doorFormatToProduce, hasDash))
+        if (ValidateDoor(door))
         {
             Address.Door = door;
         }
@@ -147,46 +147,64 @@ public class AddressService
 
     public bool ValidateAddress(Address address)
     {
-        return ValidateStreetName(address.Street);
+        bool isValid = ValidateStreetName(address.Street);
+        bool isValid2 = ValidateDoor(address.Door);
+        bool isValid3 = ValidateFloor(address.Floor);
+        bool isValid4 = ValidateStreetNumber(address.StreetNumber);
+        bool haha = 10 + 5 > 10;
+
+        return ValidateStreetName(address.Street) && ValidateDoor(address.Door) && ValidateFloor(address.Floor) && ValidateStreetNumber(address.StreetNumber);
     }
     public bool ValidateStreetName(string name)
     {
-        return (!name.Any(char.IsDigit) && (name.Length < 17 && name.Length > 5));
+        bool containsNoDigit = !name.Any(char.IsDigit);
+        bool hasProperLength = name.Length < 17 && name.Length > 5;
+        return containsNoDigit && hasProperLength;
     }
-    public bool ValidateStreetNumber(string number, int optional)
+
+    public bool ValidateFloor(string floor)
     {
-        if (optional == 0)
+        int parsed;
+        bool success = int.TryParse(floor, out parsed);
+        if (success) return (parsed > 0 && parsed < 100);
+        else return floor.Equals("st");
+    }
+    public bool ValidateStreetNumber(string number)
+    {
+        // 1 1F 10 10F 100 100F
+        int parsed;
+        bool success = int.TryParse(number, out parsed);
+        if (success)
         {
-            string numberWithoutLetter = number.Substring(0, number.Length - 2);
-            if (number.Any(char.IsLetter) && int.Parse(numberWithoutLetter) < 1000)
-            {
-                return true;
-            }
-            else return false;
+            return parsed < 1000;
         }
-        else
-        {
-            if (number.Any(char.IsLetter) || int.Parse(number) > 999)
-            {
-                return false;
-            }
-            return true;
+        else {
+            return char.IsLetter(number.Last()) && parsed < 1000;
         }
     }
-    public bool ValidateDoor(string door, int format, int hasDash)
+    public bool ValidateDoor(string door)
     {
-        switch (format)
+        char firstChar = door[0];
+        bool hasPosition = door.Contains("mf") || door.Contains("tv") || door.Contains("th");
+        int parsed;
+        bool doorNumber = int.TryParse(door, out parsed);
+        bool isOneToFifty;
+        if (doorNumber) { isOneToFifty = parsed > 0 && parsed < 51; } else isOneToFifty = false;
+
+        int parsedAgain;
+        bool doorNumberAgain = int.TryParse(door.Substring(2), out parsedAgain);
+        bool longFormatOne;
+
+        int parsedAgainAgain;
+        bool doorNumberAgainAgain = int.TryParse(door.Substring(1), out parsedAgainAgain);
+        if (doorNumberAgain)
         {
-            case 0:
-                return (door.Contains("mf") || door.Contains("tv") || door.Contains("th"));
-            case 1:
-                return (int.Parse(door) > 0 && int.Parse(door) < 51);
-            case 2:
-                char firstChar = door[0];
-                return hasDash == 1 ? firstChar >= 'a' && firstChar <= 'z' && door[1] == '-' && (int.Parse(door.Substring(2)) > 0 && int.Parse(door.Substring(2)) < 1001) :
-                    firstChar >= 'a' && firstChar <= 'z' && door[1] != '-' && (int.Parse(door.Substring(1)) > 0 && int.Parse(door.Substring(1)) < 1001);
+            longFormatOne = (firstChar >= 'a' && firstChar <= 'z' && door[1] == '-' && (parsedAgain > 0 && parsedAgain < 1000)) ||
+            (firstChar >= 'a' && firstChar <= 'z' && door[1] != '-' && (parsedAgainAgain > 0 && parsedAgainAgain < 1000));
         }
-        return true;
+        else longFormatOne = false;
+        if(hasPosition || isOneToFifty || longFormatOne) return true;
+        else return false;
     }
 
 }

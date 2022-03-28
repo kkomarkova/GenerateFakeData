@@ -18,8 +18,8 @@ namespace TestingProjectGenerateFakeData.unit
         [Theory]
         [InlineData("Thesupremegade", "100", "10", "tv", 9000, "Aalborg")]
         [InlineData("Thesupremestreet", "100", "10", "mf", 9000, "Aalborg")]
-        [InlineData("Thesupremestreet", "100F", "15", "st", 9000, "Aalborg")]
-        [InlineData("Hahahihigade", "50D", "10", "a-10", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "100F", "15", "th", 9000, "Aalborg")]
+        [InlineData("Hahahihigade", "50D", "st", "a-10", 9000, "Aalborg")]
 
         public void IfValidAddress_ReturnTrue(string street, string streetNumber, string floor, string door, int postalCode, string city)
         {
