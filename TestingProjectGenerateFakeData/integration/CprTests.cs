@@ -34,6 +34,19 @@ namespace TestingProjectGenerateFakeData.integration
             //Assert
             Assert.True(isCprValid);
         }
+        [Fact]
+        public void IfCprIsValidWithDefinedDoBAndGender()
+        {
+            // arrange 
+            var person = new Person();
+            var cprService = new CprService();
+            Gender gender = Gender.Male;
+            // act
+            person.GenerateDateOfBirth();
+            person.CprNumber = cprService.GenerateCprNumber(gender, person.DateOfBirth);
+            // assert
+            Assert.NotNull(person.CprNumber);
+        }
         [Theory]
         [InlineData("08080")]
         public void TestIfCprIncorrect(string dateOfBirth)
