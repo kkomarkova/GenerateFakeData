@@ -17,7 +17,7 @@ public class DobService
         {
             range = (DateTime.Today - start).Days;
             dateOfBirth = start.AddDays(gen.Next(range)).ToString(outputDateFormat);
-        };
+        }
 
         return dateOfBirth;
     }
