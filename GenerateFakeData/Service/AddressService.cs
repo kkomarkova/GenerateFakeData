@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace GenerateFakeData.Service;
 
-class AddressService
+public class AddressService
 {
     Address Address { get; set; }
     Random random = new();
@@ -160,7 +160,7 @@ class AddressService
 
     public bool ValidateAddress(Address address)
     {
-        return ValidateStreetName(Address.Street);
+        return ValidateStreetName(address.Street);
     }
     public bool ValidateStreetName(string name)
     {
