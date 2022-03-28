@@ -22,12 +22,12 @@ namespace TestingProjectGenerateFakeData.integration
             Assert.Equal(Convert.ToInt64(person.CprNumber), Convert.ToInt64(person.CprNumber)); //Checks if cpr is convertible to number
             Assert.Equal(8, person.PhoneNumber.Length);
             Assert.Equal(Convert.ToInt64(person.PhoneNumber), Convert.ToInt64(person.PhoneNumber));
-            Assert.NotEqual("", person.Door);
-            Assert.NotEqual("", person.Floor);
-            Assert.NotEqual("", person.Street);
-            Assert.NotEqual("", person.StreetNumber);
-            Assert.NotEqual("", person.CityName);
-            Assert.Equal(4, person.PostalCode.ToString().Length);
+            Assert.NotEqual("", person.Address.Door);
+            Assert.NotEqual("", person.Address.Floor);
+            Assert.NotEqual("", person.Address.Street);
+            Assert.NotEqual("", person.Address.StreetNumber);
+            Assert.NotEqual("", person.Address.City.CityName);
+            Assert.Equal(4, person.Address.City.PostalCode.ToString().Length);
             Assert.Equal(6, person.DateOfBirth.Length);
         }
     }
