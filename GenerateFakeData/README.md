@@ -2,12 +2,11 @@
 Testing mandatory assignment
 
 TODO:
-- [ ] create db with Addresses
-    - [ ] create layer for DB communication
-- [ ] extract random names from person-names.json DONE
-- [ ] generate CPRs DONE
-    - [ ] match DOB with CPR DONE
-- [ ] generate phone number - Marek DONE
-- [ ] generate full address - missing read from DB for postal codes
-  
+- [x] create db with Addresses
+    - [x] create layer for DB communication
+- [x] extract random names from person-names.json
+- [x] generate CPRs DONE
+    - [x] match DOB with CPR
+- [x] generate phone number
+- [x] generate full address  
  

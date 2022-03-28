@@ -61,8 +61,8 @@ public class Program
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Functionality 6: generate an address: ");
         Console.ForegroundColor = ConsoleColor.White;
-        await person.GenerateWholeAddress();
-        Console.WriteLine($"Address: {person.Street} {person.StreetNumber}, fl. {person.Floor}, {person.Door}, {person.PostalCode} {person.CityName}");
+        await person.SetAddress();
+        Console.WriteLine($"Address: {person.Address.Street} {person.Address.StreetNumber}, fl. {person.Address.Floor}, {person.Address.Door}, {person.Address.City.PostalCode} {person.Address.City.CityName}");
         Console.WriteLine();
 
         Console.ForegroundColor = ConsoleColor.Green;
@@ -78,7 +78,7 @@ public class Program
         await person.GenerateAllInfo();
         Console.WriteLine($"Randomly generated person data:\nFull name: {person.FullName}\nGender: {person.Gender}" +
                 $"\nDate of birth: {person.DateOfBirth}\nCPR number: {person.CprNumber}\n" +
-                $"Address: {person.Street} {person.StreetNumber}, fl. {person.Floor}, {person.Door}, {person.PostalCode} {person.CityName}" +
+                $"Address: {person.Address.Street} {person.Address.StreetNumber}, fl. {person.Address.Floor}, {person.Address.Door}, {person.Address.City.PostalCode} {person.Address.City.CityName}" +
                 $"\nPhone number: {person.PhoneNumber}");
         Console.WriteLine();
 
@@ -87,7 +87,8 @@ public class Program
         Console.ForegroundColor = ConsoleColor.White;
 
         // TODO: added this so that we can randomize the number of generated people 2-100, for now the upper boundary is 10 for testing purposes, change later
-        int numberOfPeopleToGenerate = random.Next(2, 11);
+        //int numberOfPeopleToGenerate = random.Next(2, 101);
+        int numberOfPeopleToGenerate = 100;
         Console.WriteLine("Generating info for " + numberOfPeopleToGenerate + " people: ");
         for(int i = 1; i < numberOfPeopleToGenerate+1; i++)
         {
@@ -95,7 +96,7 @@ public class Program
             await person.GenerateAllInfo();
             Console.WriteLine($"Full name: {person.FullName}\nGender: {person.Gender}" +
                 $"\nDate of birth: {person.DateOfBirth}\nCPR number: {person.CprNumber}\n" +
-                $"Address: {person.Street} {person.StreetNumber}, fl. {person.Floor}, {person.Door}, {person.PostalCode} {person.CityName}" +
+                $"Address: {person.Address.Street} {person.Address.StreetNumber}, fl. {person.Address.Floor}, {person.Address.Door}, {person.Address.City.PostalCode} {person.Address.City.CityName}" +
                 $"\nPhone number: {person.PhoneNumber}");
             Console.WriteLine();
         }

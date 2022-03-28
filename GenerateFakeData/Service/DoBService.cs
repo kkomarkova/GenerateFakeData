@@ -9,11 +9,16 @@ public class DobService
         Random gen = new Random();
         int range = (DateTime.Today - start).Days;
         string dateOfBirth = start.AddDays(gen.Next(range)).ToString(outputDateFormat);
-        // TODO: generate again if DoB is invalid
-        return dateService.IsDateValid(
+
+        while (!dateService.IsDateValid(
             int.Parse(dateOfBirth.Substring(0, 2)),
             int.Parse(dateOfBirth.Substring(2, 2)),
-            int.Parse(dateOfBirth.Substring(4, 2))
-        ) ? dateOfBirth : null;
+            int.Parse(dateOfBirth.Substring(4, 2))))
+        {
+            range = (DateTime.Today - start).Days;
+            dateOfBirth = start.AddDays(gen.Next(range)).ToString(outputDateFormat);
+        };
+
+        return dateOfBirth;
     }
 }

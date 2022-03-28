@@ -1,9 +1,9 @@
 ﻿using GenerateFakeData.Service;
 using Xunit;
 
-namespace TestingProjectGenerateFakeData
+namespace TestingProjectGenerateFakeData.unit
 {
-    public class HelperTests
+    public class PhoneValidatorTests
     {
         private readonly PhoneNoService _phoneGenerator = new();
 

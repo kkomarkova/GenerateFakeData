@@ -1,11 +1,10 @@
 using GenerateFakeData.Model;
 using GenerateFakeData.Service;
 using Xunit;
-using Xunit.Abstractions;
 
-namespace TestingProjectGenerateFakeData
+namespace TestingProjectGenerateFakeData.integration
 {
-    public class PersonTest
+    public class PersonTests
     {
         // to test one by one:
         // phoneNumber DONE, DoB, CPR, 
@@ -79,34 +78,6 @@ namespace TestingProjectGenerateFakeData
 
             // assert
             Assert.Equal(6, numberToTest.Length);
-        }
-
-        // integration test
-        [Fact]
-        public void IfCprIsValid()
-        {
-            // arrange 
-            var person = new Person();
-            var cprService = new CprService();
-            Gender gender = Gender.Male;
-            // act
-            person.GenerateDateOfBirth();
-            person.CprNumber = cprService.GenerateCprNumber(gender, person.DateOfBirth);
-            // assert
-            Assert.NotNull(person.CprNumber);
-        }
-
-        [Fact]
-        public void IfCprNumberMatchesDoB_AndHas10Digits_ReturnTrue()
-        {
-            // arrange 
-            var person = new Person();
-            // act
-            person.GenerateDateOfBirth();
-
-            // assert
-            Assert.Equal(6, person.DateOfBirth.Length);
-            
         }
     }
 }

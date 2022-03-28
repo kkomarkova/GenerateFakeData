@@ -2,16 +2,15 @@ using GenerateFakeData.Model;
 using GenerateFakeData.Service;
 using Xunit;
 
-namespace TestingProjectGenerateFakeData
+namespace TestingProjectGenerateFakeData.unit
 {
     public class CprValidatorTests
     {
-        private readonly CprService _cprGenerator = new CprService();
+        private readonly CprService _cprGenerator;
 
         #region Validate Cpr Validator
 
-        //10 digits 
-        //Inline data generated for different scenarios
+        //10 digits
         [Theory]
         [InlineData(Gender.Male, "0812902221", "081290")]
         [InlineData(Gender.Male, "0812902223", "081290")]
@@ -41,31 +40,24 @@ namespace TestingProjectGenerateFakeData
         [InlineData(Gender.Uninitialized, "08129022281", "081290")]
         // no date of birth provided
         [InlineData(Gender.Male, "0812902229", "")]
+        // date of birth too short
+        [InlineData(Gender.Male, "0812902229", "08129")]
         // invalid date of birth provided (31st February) 
         [InlineData(Gender.Male, "3102962229", "310296")]
         // gender not initialized yet
         [InlineData(Gender.Uninitialized, "0812902228", "081290")]
         // no data provided
         [InlineData(Gender.Uninitialized, "", "")]
+        // date of birth not a numeric string
+        [InlineData(Gender.Male, "222222", "ddMMyy")]
+        // CPR not a numeric string
+        [InlineData(Gender.Male, "nonNumericCPR", "081290")]
+        // non-numeric date of birth can't be part of CPR
+        [InlineData(Gender.Male, "ddMMyy2222", "ddMMyy")]
         public void IfInvalidCpr_ReturnTrue(Gender gender, string cprNumber, string dateOfBirth)
         {
             bool isValid = _cprGenerator.ValidateCpr(gender, cprNumber, dateOfBirth);
             Assert.False(isValid);
         }
-        //Starting with DateOfBirth
-        [Fact]
-        public void IfValidCpr_ReturnFalseBecauseDateIsString()
-        {
-            const Gender gender = Gender.Male;
-            const string invalidDateOfBirthToTest = "ddMMyy";
-            const string dateOfBirth = "222222";
-
-            Assert.ThrowsAny<System.Exception>(() => _cprGenerator.ValidateCpr(
-                gender, invalidDateOfBirthToTest, dateOfBirth)
-            );
-        }
-        // Zde jsem skoncila :-) TO GO ----> Validatovat Validatory CPR a potom dopsat testy v CprTest class.
-
-        #endregion
     }
 }
