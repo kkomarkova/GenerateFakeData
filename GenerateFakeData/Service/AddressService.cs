@@ -27,8 +27,8 @@ public class AddressService
         GenerateFloor();
         GenerateDoor();
         var generatedInformation = await GenerateCity();
-        if (!generatedInformation.IsSuccess) return new Address();
-        return Address;
+        if (generatedInformation.IsSuccess && ValidateAddress(Address)) return Address;
+        else return new Address();
     }
 
     public void GenerateStreetName()
@@ -54,8 +54,10 @@ public class AddressService
         {
             streetNumber += chars[random.Next(chars.Length)];
         }
-
-        Address.StreetNumber = streetNumber;
+        if (ValidateStreetNumber(streetNumber, optionalFollowed))
+        {
+            Address.StreetNumber = streetNumber;
+        }
     }
 
     public void GenerateFloor()
@@ -114,8 +116,10 @@ public class AddressService
                     : randomChar + numberUntilThousand.ToString();
                 break;
         }
-
-        Address.Door = door;
+        if (ValidateDoor(door, doorFormatToProduce, hasDash))
+        {
+            Address.Door = door;
+        }
     }
 
     //Reading city and postalcode from Address.sql
@@ -140,4 +144,49 @@ public class AddressService
         Address.City.PostalCode = cityList[indexResult].PostalCode;
         return (success, cityList[indexResult].CityName, cityList[indexResult].PostalCode);
     }
+
+    public bool ValidateAddress(Address address)
+    {
+        return ValidateStreetName(address.Street);
+    }
+    public bool ValidateStreetName(string name)
+    {
+        return (!name.Any(char.IsDigit) && (name.Length < 17 && name.Length > 5));
+    }
+    public bool ValidateStreetNumber(string number, int optional)
+    {
+        if (optional == 0)
+        {
+            string numberWithoutLetter = number.Substring(0, number.Length - 2);
+            if (number.Any(char.IsLetter) && int.Parse(numberWithoutLetter) < 1000)
+            {
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (number.Any(char.IsLetter) || int.Parse(number) > 999)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+    public bool ValidateDoor(string door, int format, int hasDash)
+    {
+        switch (format)
+        {
+            case 0:
+                return (door.Contains("mf") || door.Contains("tv") || door.Contains("th"));
+            case 1:
+                return (int.Parse(door) > 0 && int.Parse(door) < 51);
+            case 2:
+                char firstChar = door[0];
+                return hasDash == 1 ? firstChar >= 'a' && firstChar <= 'z' && door[1] == '-' && (int.Parse(door.Substring(2)) > 0 && int.Parse(door.Substring(2)) < 1001) :
+                    firstChar >= 'a' && firstChar <= 'z' && door[1] != '-' && (int.Parse(door.Substring(1)) > 0 && int.Parse(door.Substring(1)) < 1001);
+        }
+        return true;
+    }
+
 }
