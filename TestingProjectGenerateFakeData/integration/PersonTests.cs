@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using GenerateFakeData.Model;
-using GenerateFakeData.Service;
 using Xunit;
 
 namespace TestingProjectGenerateFakeData.integration
 {
+    [ExcludeFromCodeCoverage]  
     public class PersonTests
     {
         // to test one by one:
