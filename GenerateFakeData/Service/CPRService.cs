@@ -26,16 +26,15 @@ public class CprService
         if (ValidateCpr(gender, generatedCprNumber, dateOfBirth)) {
             return generatedCprNumber;
         }
-        else {
-            Console.WriteLine("Error generating CPR number");
-            return null;
-        }
+        Console.WriteLine("Error generating CPR number");
+        return null;
     }
     //Validator of CprNumber
     public bool ValidateCpr(Gender gender, string cprToTest, string dateOfBirth)
     {
-        if (gender == Gender.Uninitialized || cprToTest.Length != 10 ||
-            dateOfBirth.Length != 6) return false;
+        
+        if (gender == Gender.Uninitialized || cprToTest is not {Length: 10} || dateOfBirth is not {Length: 6})
+            return false;
         bool validDateMonth = ValidateCprMonth(cprToTest);
 
         bool validGender = ValidateCprLastDigit(gender, cprToTest);

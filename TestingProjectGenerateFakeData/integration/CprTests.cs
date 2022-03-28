@@ -34,5 +34,21 @@ namespace TestingProjectGenerateFakeData.integration
             //Assert
             Assert.True(isCprValid);
         }
+        [Theory]
+        [InlineData("08080")]
+        public void TestIfCprIncorrect(string dateOfBirth)
+        {
+            //Arrange
+            Person person = new Person();
+            CprService cprValidator = new CprService();
+            //Act
+            person.DateOfBirth = dateOfBirth;
+            person.GenerateCprNumber();
+            var isCprValid = cprValidator.ValidateCpr(person.Gender, 
+                person.CprNumber, person.DateOfBirth);
+            //Assert
+            Assert.Null(person.CprNumber);
+            Assert.False(isCprValid);
+        }
     }
 }
