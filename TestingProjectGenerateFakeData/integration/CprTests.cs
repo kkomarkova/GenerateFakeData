@@ -1,8 +1,8 @@
 ﻿using System;
-using Xunit;
 using GenerateFakeData.Model;
+using Xunit;
 
-namespace TestingProjectGenerateFakeData
+namespace TestingProjectGenerateFakeData.integration
 {
     public class CprTests
     {

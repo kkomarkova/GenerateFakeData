@@ -2,7 +2,7 @@ using GenerateFakeData.Model;
 using GenerateFakeData.Service;
 using Xunit;
 
-namespace TestingProjectGenerateFakeData
+namespace TestingProjectGenerateFakeData.integration
 {
     public class PersonTests
     {

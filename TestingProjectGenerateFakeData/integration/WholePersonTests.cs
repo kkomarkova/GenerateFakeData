@@ -1,9 +1,9 @@
-﻿using GenerateFakeData.Model;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using GenerateFakeData.Model;
 using Xunit;
 
-namespace TestingProjectGenerateFakeData
+namespace TestingProjectGenerateFakeData.integration
 {
     public class WholePersonTests
     {
