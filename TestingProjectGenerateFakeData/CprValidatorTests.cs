@@ -10,7 +10,8 @@ namespace TestingProjectGenerateFakeData
 
         #region Validate Cpr Validator
 
-        //10 digits
+        //10 digits 
+        //Inline data generated for different scenarios
         [Theory]
         [InlineData(Gender.Male, "0812902221", "081290")]
         [InlineData(Gender.Male, "0812902223", "081290")]
