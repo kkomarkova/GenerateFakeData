@@ -8,16 +8,14 @@ namespace GenerateFakeData.Model
 
         public NameGenderGenerator()
         {
-            persons = GetDataFromJsonFile(Properties.Resources.person_names);
+            persons = GetDataFromJsonString(Properties.Resources.person_names);
         }
 
-        public List<Person> GetDataFromJsonFile(string pathToFile)
+        public List<Person> GetDataFromJsonString(string jsonData)
         {
             try
             {
-                return File.Exists(pathToFile) 
-                    ? JsonConvert.DeserializeObject<Persons>(pathToFile)?.persons 
-                    : null;
+                return JsonConvert.DeserializeObject<Persons>(jsonData)?.persons;
             }
             catch (Exception e)
             {
