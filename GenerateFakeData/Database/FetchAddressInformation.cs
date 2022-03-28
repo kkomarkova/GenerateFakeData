@@ -3,7 +3,7 @@ using MySql.Data.MySqlClient;
 
 namespace GenerateFakeData.Database;
 
-public class FetchAddressInformation
+public class FetchAddressInformation : IFetchAddressInformation
 {
     private MySqlConnection conn;
 
