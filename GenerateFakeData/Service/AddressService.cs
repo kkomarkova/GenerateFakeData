@@ -151,7 +151,6 @@ public class AddressService
         bool isValid2 = ValidateDoor(address.Door);
         bool isValid3 = ValidateFloor(address.Floor);
         bool isValid4 = ValidateStreetNumber(address.StreetNumber);
-        bool haha = 10 + 5 > 10;
 
         return ValidateStreetName(address.Street) && ValidateDoor(address.Door) && ValidateFloor(address.Floor) && ValidateStreetNumber(address.StreetNumber);
     }
@@ -171,7 +170,6 @@ public class AddressService
     }
     public bool ValidateStreetNumber(string number)
     {
-        // 1 1F 10 10F 100 100F
         int parsed;
         bool success = int.TryParse(number, out parsed);
         if (success)
