@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TestingProjectGenerateFakeData
 {
-    public class IntegrationTests
+    public class WholePersonTests
     {
         [Fact]
         public async Task FakeDataTest()

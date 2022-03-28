@@ -3,7 +3,7 @@ using Xunit;
 
 namespace TestingProjectGenerateFakeData
 {
-    public class HelperTests
+    public class PhoneValidatorTests
     {
         private readonly PhoneNoService _phoneGenerator = new();
 

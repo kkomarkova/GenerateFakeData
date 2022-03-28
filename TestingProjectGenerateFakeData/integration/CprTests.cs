@@ -4,7 +4,7 @@ using GenerateFakeData.Model;
 
 namespace TestingProjectGenerateFakeData
 {
-    public class CprTest
+    public class CprTests
     {
         [Fact]
         public void TestIfFemaleCprEven()

@@ -1,11 +1,10 @@
 using GenerateFakeData.Model;
 using GenerateFakeData.Service;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace TestingProjectGenerateFakeData
 {
-    public class PersonTest
+    public class PersonTests
     {
         // to test one by one:
         // phoneNumber DONE, DoB, CPR, 
