@@ -8,17 +8,23 @@ namespace GenerateFakeData.Model
 
         public NameGenderGenerator()
         {
-            try
-            {
-                var jsonFile = Properties.Resources.person_names;
-                persons = JsonConvert.DeserializeObject<Persons>(jsonFile)?.persons;
-            }
-            catch
-            {
-                // ignored
-            }
+            persons = GetDataFromJsonFile(Properties.Resources.person_names);
         }
 
+        public List<Person> GetDataFromJsonFile(string pathToFile)
+        {
+            try
+            {
+                return File.Exists(pathToFile) 
+                    ? JsonConvert.DeserializeObject<Persons>(pathToFile)?.persons 
+                    : null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
         public bool GetRandomPerson(out string firstName, out string lastName, out Gender gender)
         {
             firstName = string.Empty;
@@ -43,7 +49,7 @@ namespace GenerateFakeData.Model
             public List<Person> persons { get; set; }
         }
 
-        private partial class Person
+        public partial class Person
         {
             public string Name { get; set; }
             public string Surname { get; set; }
