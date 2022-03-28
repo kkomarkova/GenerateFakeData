@@ -183,11 +183,13 @@ public class AddressService
         bool success = int.TryParse(door, out parsed);
         bool isOneToFifty;
         if (success) { isOneToFifty = parsed > 0 && parsed < 51; } else isOneToFifty = false;
-
-        int parsedAgain;
-        bool successful = int.TryParse(door.Substring(2), out parsedAgain);
+        
+        int parsedAgain = 0;
+        bool successful = true;
+        if(door.Length >= 3){
+            successful = int.TryParse(door.Substring(2), out parsedAgain);
+        }
         bool longFormatOne;
-
         int parsedAgainAgain;
         bool alsoSuccessful = int.TryParse(door.Substring(1), out parsedAgainAgain);
         if (successful && alsoSuccessful)
