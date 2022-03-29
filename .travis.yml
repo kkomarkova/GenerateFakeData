@@ -2,6 +2,13 @@ language: csharp
 solution: GenerateFakeData.sln
 mono: none
 dotnet: 6.0.201
+addons:
+  sonarcloud:
+    organization: "kkomarkova"
+    token:
+      secure: "**************************" # encrypted value of your token
 script:
   - dotnet restore
   - dotnet test
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - sonar-scanner
