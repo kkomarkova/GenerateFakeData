@@ -172,7 +172,7 @@ public class AddressService
             return parsed < 1000 && parsed > 0;
         }
         else {
-            return char.IsLetter(number[number.Length-1]) && (parsed < 1000 && parsed > 0);
+            return char.IsLetter(number.Last()) && (parsed < 1000 && parsed > 0);
         }
     }
     public bool ValidateDoor(string door)
