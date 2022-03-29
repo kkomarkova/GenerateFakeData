@@ -169,10 +169,10 @@ public class AddressService
         bool success = int.TryParse(number, out parsed);
         if (success)
         {
-            return parsed < 1000;
+            return parsed < 1000 && parsed > 0;
         }
         else {
-            return char.IsLetter(number.Last()) && parsed < 1000;
+            return char.IsLetter(number[number.Length-1]) && (parsed < 1000 && parsed > 0);
         }
     }
     public bool ValidateDoor(string door)

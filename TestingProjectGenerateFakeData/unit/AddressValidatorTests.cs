@@ -16,10 +16,25 @@ namespace TestingProjectGenerateFakeData.unit
             _addressService = new AddressService();
         }
         [Theory]
-        [InlineData("Thesupremegade", "100", "10", "tv", 9000, "Aalborg")]
-        [InlineData("Thesupremestreet", "100", "10", "mf", 9000, "Aalborg")]
-        [InlineData("Thesupremestreet", "100F", "15", "th", 9000, "Aalborg")]
-        [InlineData("Hahahihigade", "50D", "st", "a-10", 9000, "Aalborg")]
+        // street
+        [InlineData("Thesupremegadeee", "100", "10", "tv", 9000, "Aalborg")]
+        [InlineData("Valida", "100", "1", "mf", 9000, "Aalborg")]
+        // streetNumber
+        [InlineData("Thesupremestreet", "1", "1", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "999", "1", "mf", 9000, "Aalborg")]
+        // floor
+        [InlineData("Thesupremestreet", "1", "st", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "1", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "mf", 9000, "Aalborg")]
+        // door
+        [InlineData("Thesupremestreet", "1", "99", "tv", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "th", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "1", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "50", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a1", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a999", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a-1", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a-999", 9000, "Aalborg")]
 
         public void IfValidAddress_ReturnTrue(string street, string streetNumber, string floor, string door, int postalCode, string city)
         {
@@ -28,11 +43,28 @@ namespace TestingProjectGenerateFakeData.unit
         }
 
         [Theory]
-        [InlineData("TheLongestStreetIKnowOf", "50D", "10", "a-10", 9000, "Aalborg")]
-        [InlineData("Short", "50D", "10", "a-10", 9000, "Aalborg")]
-        [InlineData("Hahahihigade", "1000", "10", "a-10", 9000, "Aalborg")]
-        [InlineData("Hahahihigade", "50D", "100", "a-10", 9000, "Aalborg")]
-        [InlineData("Hahahihigade", "50D", "10", "a-1000", 9000, "Aalborg")]
+        //street
+        [InlineData("TheLongestStreetIKnowOf", "100F", "1", "mf", 9000, "Aalborg")]
+        [InlineData("Short", "100F", "1", "mf", 9000, "Aalborg")]
+        // streetNumber
+        [InlineData("Thesupremestreet", "0", "1", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1000", "1", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "0F", "1", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1000F", "1", "mf", 9000, "Aalborg")]
+        // floor
+        [InlineData("Thesupremestreet", "1", "0", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "100", "mf", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "stuen", "mf", 9000, "Aalborg")]
+        // door
+        [InlineData("Thesupremestreet", "1", "99", "xd", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "0", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "51", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a0", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a1000", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a-1000", 9000, "Aalborg")]
+        [InlineData("Thesupremestreet", "1", "99", "a-0", 9000, "Aalborg")]
+
+        
         public void IfInvalidAddress_ReturnFalse(string street, string streetNumber, string floor, string door, int postalCode, string city)
         {
             bool isValid = _addressService.ValidateAddress(new Address(street, streetNumber, floor, door, new City(postalCode, city)));
